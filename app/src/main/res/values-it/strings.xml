@@ -5,6 +5,6 @@
     <string name="NO">NO</string>
     <string name="YES">SÌ</string>
     <string name="player_to_scouts">Aggiungi giocatore allo scouting</string>
-    <string name="delete_scouted_players_list_question">Sei sicuro di eliminare l\'elenco dei giocatori tenuti d'occhio?</string>
-    <string name="delete_scouted_players_list_title">Elimina l\'elenco dei giocatori scoutati</string>
+    <string name="delete_scouted_players_list_question">Sei sicuro di eliminare l\\\'elenco dei giocatori tenuti d\'occhio?</string>
+    <string name="delete_scouted_players_list_title">Elimina l\\\'elenco dei giocatori scoutati</string>
 </resources>
