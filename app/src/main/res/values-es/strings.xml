@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Search">Buscar</string>
+    <string name="Filters">Filtros</string>
+    <string name="NO">NO</string>
+    <string name="YES">SÍ</string>
+    <string name="player_to_scouts">Añadir jugador a ojeados</string>
+    <string name="delete_scouted_players_list_question">¿Estás seguro de borrar la lista de jugadores ojeados?</string>
+    <string name="delete_scouted_players_list_title">Eliminar la lista de jugadores explorados</string>
+</resources>
