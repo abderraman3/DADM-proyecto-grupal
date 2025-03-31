@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_primary">#FFFFFFFF</color>
     <color name="background_secondary">#FF000000</color>
+    <color name="foreground_primary">#FFFFFFFF</color>
+    <color name="foreground_secondary">#FF000000</color>
     <color name="text_primary">#FF000000</color>
     <color name="text_secondary">#FF000000</color>
 </resources>
