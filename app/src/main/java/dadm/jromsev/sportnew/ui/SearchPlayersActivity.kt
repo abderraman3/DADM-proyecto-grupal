@@ -2,7 +2,9 @@ package dadm.jromsev.sportnew.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
 
 class SearchPlayersActivity : AppCompatActivity() {
@@ -12,6 +14,11 @@ class SearchPlayersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = SearchPlayersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Configurar botón de settings
+        binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
         setupBottomNavigation()
     }
