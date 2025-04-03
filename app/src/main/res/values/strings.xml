@@ -10,4 +10,7 @@
     <string name="get_scouts">Go to Scouts</string>
     <string name="get_results">Get Results</string>
     <string name="get_players">Get Players</string>
+    <string name="title_scouts" translatable="false"></string>
+    <string name="title_search_players">Players</string>
+    <string name="title_search_results">Results</string>
 </resources>

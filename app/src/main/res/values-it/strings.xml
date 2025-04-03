@@ -10,4 +10,6 @@
     <string name="get_scouts">xxx</string>
     <string name="get_results">xxx</string>
     <string name="get_players">xxx</string>
+    <string name="title_search_players">xxx</string>
+    <string name="title_search_results">xxx</string>
 </resources>
