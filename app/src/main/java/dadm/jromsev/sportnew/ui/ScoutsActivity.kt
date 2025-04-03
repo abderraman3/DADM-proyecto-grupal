@@ -3,14 +3,14 @@ package dadm.jromsev.sportnew.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dadm.jromsev.sportnew.databinding.SearchResultsBinding
+import dadm.jromsev.sportnew.databinding.ScoutsBinding
 
-class SearchResultsActivity : AppCompatActivity() {
-    private lateinit var binding: SearchResultsBinding
+class ScoutsActivity : AppCompatActivity() {
+    private lateinit var binding: ScoutsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = SearchResultsBinding.inflate(layoutInflater)
+        binding = ScoutsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupBottomNavigation()
@@ -18,7 +18,10 @@ class SearchResultsActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         binding.bottomNavBar.btnTrophy.setOnClickListener {
-            // Ya estamos en search_results, no hacemos nada
+            if (!this::class.java.simpleName.contains("SearchResults")) {
+                startActivity(Intent(this, SearchResultsActivity::class.java))
+                finish()
+            }
         }
 
         binding.bottomNavBar.btnPlayer.setOnClickListener {
@@ -29,10 +32,7 @@ class SearchResultsActivity : AppCompatActivity() {
         }
 
         binding.bottomNavBar.btnEye.setOnClickListener {
-            if (!this::class.java.simpleName.contains("Scouts")) {
-                startActivity(Intent(this, ScoutsActivity::class.java))
-                finish()
-            }
+            // Ya estamos en scouts, no hacemos nada
         }
     }
 }
