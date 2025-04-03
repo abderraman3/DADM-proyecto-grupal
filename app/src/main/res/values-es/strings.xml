@@ -7,4 +7,7 @@
     <string name="player_to_scouts">Añadir jugador a ojeados</string>
     <string name="delete_scouted_players_list_question">¿Estás seguro de borrar la lista de jugadores ojeados?</string>
     <string name="delete_scouted_players_list_title">Eliminar la lista de jugadores explorados</string>
+    <string name="get_scouts">Ir a ojeados</string>
+    <string name="get_results">Ir a Jugadores</string>
+    <string name="get_players">Ir a Jugadores</string>
 </resources>

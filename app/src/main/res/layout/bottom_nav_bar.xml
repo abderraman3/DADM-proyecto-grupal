@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="?attr/colorPrimary"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_trophy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/trophy"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/get_results"
+            android:layout_gravity="center"
+            android:minWidth="48dp"
+            android:minHeight="48dp"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="24dp"
+        android:background="@android:color/white" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/player"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/get_players"
+            android:layout_gravity="center"
+            android:minWidth="48dp"
+            android:minHeight="48dp"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="24dp"
+        android:background="@android:color/white" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/eye_open"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/get_scouts"
+            android:layout_gravity="center"
+            android:minWidth="48dp"
+            android:minHeight="48dp"/>
+    </FrameLayout>
+
+</LinearLayout>

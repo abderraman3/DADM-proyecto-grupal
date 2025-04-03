@@ -7,4 +7,7 @@
     <string name="player_to_scouts">Add player to scouts</string>
     <string name="delete_scouted_players_list_question">Are you sure you want to delete the scouted players list?</string>
     <string name="delete_scouted_players_list_title">Delete the scouted players list</string>
+    <string name="get_scouts">Go to Scouts</string>
+    <string name="get_results">Get Results</string>
+    <string name="get_players">Get Players</string>
 </resources>
