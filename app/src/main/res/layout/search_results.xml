@@ -11,31 +11,31 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="110dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/title_search_results"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_gravity="center"/>
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/btn_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/settings"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/settings"
-            android:minWidth="48dp"
-            android:minHeight="48dp"/>
+            android:minWidth="58dp"
+            android:minHeight="58dp"
+            android:src="@drawable/settings" />
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
