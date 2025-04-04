@@ -14,4 +14,10 @@
     <string name="title_search_results">xxx</string>
     <string name="settings">xxx</string>
     <string name="back">xxx</string>
+    <string name="language">Lingua</string>
+    <string name="language_spanish">Spagnolo (Español)</string>
+    <string name="language_english">Inglese (English)</string>
+    <string name="language_italian">Italiano</string>
+    <string name="night_mode_disabled">Modalità notturna disabilitata</string>
+    <string name="night_mode_activated">Modalità notturna attivata</string>
 </resources>

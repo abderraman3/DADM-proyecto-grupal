@@ -15,4 +15,10 @@
     <string name="title_search_results">Results</string>
     <string name="settings">Settings</string>
     <string name="back">Back</string>
+    <string name="language">Language</string>
+    <string name="language_spanish">Spanish (Español)</string>
+    <string name="language_english">English</string>
+    <string name="language_italian">Italian (Italiano)</string>
+    <string name="night_mode_disabled">Night mode disabled</string>
+    <string name="night_mode_activated">Night mode activated</string>
 </resources>
