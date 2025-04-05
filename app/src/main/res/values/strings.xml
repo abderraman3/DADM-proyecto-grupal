@@ -21,4 +21,7 @@
     <string name="language_italian">Italian (Italiano)</string>
     <string name="night_mode_disabled">Night mode disabled</string>
     <string name="night_mode_activated">Night mode activated</string>
+    <string name="sport_football">Soccer</string>
+    <string name="sport_NFL">NFL</string>
+    <string name="sport_basketball">Basketball</string>
 </resources>

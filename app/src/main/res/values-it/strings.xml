@@ -20,4 +20,7 @@
     <string name="language_italian">Italiano</string>
     <string name="night_mode_disabled">Modalità notturna disabilitata</string>
     <string name="night_mode_activated">Modalità notturna attivata</string>
+    <string name="sport_football">Calcio</string>
+    <string name="sport_NFL">NFL</string>
+    <string name="sport_basketball">Pallacanestro</string>
 </resources>
