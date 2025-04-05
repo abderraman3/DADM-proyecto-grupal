@@ -44,20 +44,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
 
             <TextView
+                android:id="@+id/tvLanguage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/language"
-                android:textSize="18sp"/>
-
-            <Button
-                android:id="@+id/btnLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/select_language"/>
+                android:textSize="18dp"/>
         </LinearLayout>
 
         <!-- Configuración de modo noche -->

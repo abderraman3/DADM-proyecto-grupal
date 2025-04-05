@@ -26,14 +26,14 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        // Configurar el selector de idioma
+        // Configurar el selector de idioma (ahora en el TextView)
         val languagesDisplay = resources.getStringArray(R.array.languages_display)
         val languagesValues = resources.getStringArray(R.array.languages_values)
 
         val currentLocale = resources.configuration.locales[0]
         val currentLangIndex = languagesValues.indexOf(currentLocale.language).coerceAtLeast(0)
 
-        binding.btnLanguage.setOnClickListener {
+        binding.tvLanguage.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.select_language))
                 .setSingleChoiceItems(languagesDisplay, currentLangIndex) { dialog, which ->
