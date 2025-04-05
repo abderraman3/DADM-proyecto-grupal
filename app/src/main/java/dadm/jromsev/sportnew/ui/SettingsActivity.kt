@@ -3,7 +3,10 @@ package dadm.jromsev.sportnew.ui
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import dadm.jromsev.sportnew.R
@@ -24,32 +27,22 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Configurar el selector de idioma
+        val languagesDisplay = resources.getStringArray(R.array.languages_display)
+        val languagesValues = resources.getStringArray(R.array.languages_values)
+
         val currentLocale = resources.configuration.locales[0]
-        when (currentLocale.language) {
-            "es" -> binding.languageRadioGroup.check(R.id.radioSpanish)
-            "it" -> binding.languageRadioGroup.check(R.id.radioItalian)
-            else -> binding.languageRadioGroup.check(R.id.radioEnglish)
-        }
+        val currentLangIndex = languagesValues.indexOf(currentLocale.language).coerceAtLeast(0)
 
-        binding.languageRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            val langCode = when (checkedId) {
-                R.id.radioSpanish -> "es"
-                R.id.radioItalian -> "it"
-                else -> "en"
-            }
-
-            val locale = Locale(langCode)
-            Locale.setDefault(locale)
-
-            val config = Configuration()
-            config.setLocale(locale)
-            resources.updateConfiguration(config, resources.displayMetrics)
-
-            // Actualizar el texto del modo noche según el nuevo idioma
-            updateNightModeText()
-
-            // Reiniciar la actividad para aplicar los cambios
-            recreate()
+        binding.btnLanguage.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.select_language))
+                .setSingleChoiceItems(languagesDisplay, currentLangIndex) { dialog, which ->
+                    val langCode = languagesValues[which]
+                    changeAppLanguage(langCode)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(getString(android.R.string.cancel), null)
+                .show()
         }
 
         // Configurar el switch de modo noche
@@ -64,9 +57,23 @@ class SettingsActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             updateNightModeText()
-            // Reiniciar la actividad para aplicar los cambios
             recreate()
         }
+    }
+
+    private fun changeAppLanguage(langCode: String) {
+        val locale = Locale(langCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        // Actualizar el texto del modo noche según el nuevo idioma
+        updateNightModeText()
+
+        // Reiniciar la actividad para aplicar los cambios
+        recreate()
     }
 
     private fun updateNightModeText() {
