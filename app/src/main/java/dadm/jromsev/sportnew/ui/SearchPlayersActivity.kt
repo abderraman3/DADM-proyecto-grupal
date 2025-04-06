@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import dadm.jromsev.sportnew.R
@@ -31,18 +32,22 @@ class SearchPlayersActivity : AppCompatActivity() {
     }
 
     private fun showSportsFilterDialog() {
-        val sportsDisplay = resources.getStringArray(R.array.sports_display)
+        val popupMenu = PopupMenu(this, binding.btnFilter)
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.Filters))
-            .setItems(sportsDisplay) { dialog, which ->
-                // Aquí puedes manejar la selección del deporte
-                // which es el índice del elemento seleccionado
-                val selectedSport = resources.getStringArray(R.array.sports_values)[which]
-                // Realizar alguna acción con el deporte seleccionado
-            }
-            .setNegativeButton(getString(android.R.string.cancel), null)
-            .show()
+        // Inflar el menú con los deportes
+        val sportsDisplay = resources.getStringArray(R.array.sports_display)
+        sportsDisplay.forEachIndexed { index, sport ->
+            popupMenu.menu.add(0, index, 0, sport)
+        }
+
+        // Manejar la selección
+        popupMenu.setOnMenuItemClickListener { item ->
+            val selectedSport = resources.getStringArray(R.array.sports_values)[item.itemId]
+            // Realizar acción con el deporte seleccionado
+            true
+        }
+
+        popupMenu.show()
     }
 
     private fun setupBottomNavigation() {
