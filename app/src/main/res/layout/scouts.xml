@@ -18,14 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_scouts"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_gravity="center"/>
-
         <ImageButton
             android:id="@+id/btn_settings"
             android:layout_width="wrap_content"
@@ -80,11 +72,6 @@
                 android:minHeight="48dp"/>
         </FrameLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:background="@android:color/white" />
-
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,11 +91,6 @@
                 android:minHeight="48dp"/>
         </FrameLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:background="@android:color/white" />
-
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -121,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/eye_open"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@color/teal_700"
                 android:contentDescription="@string/get_scouts"
                 android:layout_gravity="center"
                 android:minWidth="48dp"

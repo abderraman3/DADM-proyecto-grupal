@@ -85,17 +85,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/trophy"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@color/teal_700"
                 android:contentDescription="@string/get_results"
                 android:layout_gravity="center"
                 android:minWidth="48dp"
                 android:minHeight="48dp"/>
         </FrameLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:background="@android:color/white" />
 
         <FrameLayout
             android:layout_width="0dp"
@@ -115,11 +110,6 @@
                 android:minWidth="48dp"
                 android:minHeight="48dp"/>
         </FrameLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:background="@android:color/white" />
 
         <FrameLayout
             android:layout_width="0dp"
