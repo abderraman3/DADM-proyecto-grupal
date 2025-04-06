@@ -2,7 +2,9 @@ package dadm.jromsev.sportnew.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
@@ -20,7 +22,27 @@ class SearchPlayersActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        // Configurar botón de filtro
+        binding.btnFilter.setOnClickListener {
+            showSportsFilterDialog()
+        }
+
         setupBottomNavigation()
+    }
+
+    private fun showSportsFilterDialog() {
+        val sportsDisplay = resources.getStringArray(R.array.sports_display)
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.Filters))
+            .setItems(sportsDisplay) { dialog, which ->
+                // Aquí puedes manejar la selección del deporte
+                // which es el índice del elemento seleccionado
+                val selectedSport = resources.getStringArray(R.array.sports_values)[which]
+                // Realizar alguna acción con el deporte seleccionado
+            }
+            .setNegativeButton(getString(android.R.string.cancel), null)
+            .show()
     }
 
     private fun setupBottomNavigation() {
