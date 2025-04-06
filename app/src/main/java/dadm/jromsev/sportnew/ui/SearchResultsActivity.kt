@@ -24,18 +24,18 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavBar.btnTrophy.setOnClickListener {
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
             // Ya estamos en search_results, no hacemos nada
         }
 
-        binding.bottomNavBar.btnPlayer.setOnClickListener {
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchPlayers")) {
                 startActivity(Intent(this, SearchPlayersActivity::class.java))
                 finish()
             }
         }
 
-        binding.bottomNavBar.btnEye.setOnClickListener {
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
             if (!this::class.java.simpleName.contains("Scouts")) {
                 startActivity(Intent(this, ScoutsActivity::class.java))
                 finish()

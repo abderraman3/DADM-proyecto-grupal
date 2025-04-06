@@ -24,21 +24,22 @@ class ScoutsActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavBar.btnTrophy.setOnClickListener {
+        // Acceder a los botones directamente desde el LinearLayout usando findViewById
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchResults")) {
                 startActivity(Intent(this, SearchResultsActivity::class.java))
                 finish()
             }
         }
 
-        binding.bottomNavBar.btnPlayer.setOnClickListener {
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchPlayers")) {
                 startActivity(Intent(this, SearchPlayersActivity::class.java))
                 finish()
             }
         }
 
-        binding.bottomNavBar.btnEye.setOnClickListener {
+        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
             // Ya estamos en scouts, no hacemos nada
         }
     }
