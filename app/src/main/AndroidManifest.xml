@@ -31,6 +31,9 @@
             android:name=".ui.SettingsActivity"
             android:exported="false"
             android:configChanges="locale|uiMode" />
+        <activity
+            android:name=".ui.PlayerProfileActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

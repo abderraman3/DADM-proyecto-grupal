@@ -2,71 +2,187 @@ package dadm.jromsev.sportnew.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import dadm.jromsev.sportnew.R
+import dadm.jromsev.sportnew.data.player.PlayerDataSource
+import dadm.jromsev.sportnew.data.player.model.RemotePlayerDto
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
+import dadm.jromsev.sportnew.ui.domain.model.Player
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchPlayersActivity : AppCompatActivity() {
+
     private lateinit var binding: SearchPlayersBinding
+    private var selectedSport: String? = null
+    private lateinit var adapter: ArrayAdapter<String>
+    private val playerNames = mutableListOf<String>()
+    private val playersMap = mutableMapOf<String, Player>()
+
+    @Inject
+    lateinit var playerDataSource: PlayerDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SearchPlayersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configurar botón de settings
+        setupAdapter()
+        setupSearchView()
+        setupListView()
+        setupToolbar()
+        setupBottomNavigation()
+    }
+
+    private fun setupAdapter() {
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, playerNames)
+        binding.listViewPlayers.adapter = adapter
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchPlayers(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean = false
+        })
+    }
+
+    private fun setupListView() {
+        binding.listViewPlayers.setOnItemClickListener { _, _, position, _ ->
+            playersMap[playerNames[position]]?.let { player ->
+                openPlayerProfile(player)
+            }
+        }
+    }
+
+    private fun setupToolbar() {
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        // Configurar botón de filtro
         binding.btnFilter.setOnClickListener {
             showSportsFilterDialog()
         }
+    }
 
-        setupBottomNavigation()
+    private fun searchPlayers(query: String) {
+        lifecycleScope.launch {
+            try {
+                showLoading()
+                val response = playerDataSource.getPlayer(query, selectedSport ?: "")
+
+                if (response.isSuccessful) {
+                    response.body()?.let { updatePlayersList(it) } ?: showError("No data received")
+                } else {
+                    showError("Error: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                showError("Connection error: ${e.message}")
+            } finally {
+                hideLoading()
+            }
+        }
+    }
+
+    private fun updatePlayersList(remotePlayerDto: RemotePlayerDto) {
+        playerNames.clear()
+        playersMap.clear()
+
+        remotePlayerDto.player?.let { players ->
+            for (player in players) {
+                player.strPlayer?.let { name ->
+                    playerNames.add(name)
+                    playersMap[name] = Player(
+                        id = player.idPlayer ?: "",
+                        name = name,
+                        team = player.strTeam ?: "",
+                        sport = player.strSport ?: "",
+                        thumb = player.strThumb,
+                        nationality = player.strNationality,
+                        birthDate = player.dateBorn,
+                        position = player.strPosition
+                    )
+                }
+            }
+        }
+
+        if (playerNames.isEmpty()) showError("No players found")
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun openPlayerProfile(player: Player) {
+        Intent(this, PlayerProfileActivity::class.java).apply {
+            putExtra("player", player)
+            startActivity(this)
+        }
     }
 
     private fun showSportsFilterDialog() {
-        val popupMenu = PopupMenu(this, binding.btnFilter)
+        PopupMenu(this, binding.btnFilter).apply {
+            val sports = resources.getStringArray(R.array.sports_display)
+            sports.forEachIndexed { index, sport ->
+                menu.add(0, index, 0, sport)
+            }
 
-        // Inflar el menú con los deportes
-        val sportsDisplay = resources.getStringArray(R.array.sports_display)
-        sportsDisplay.forEachIndexed { index, sport ->
-            popupMenu.menu.add(0, index, 0, sport)
+            setOnMenuItemClickListener { item ->
+                selectedSport = resources.getStringArray(R.array.sports_values).getOrNull(item.itemId)
+                val query = binding.searchView.query?.toString() ?: ""
+                if (query.isNotEmpty()) {
+                    searchPlayers(query)
+                }
+                true
+            }
+            show()
         }
-
-        // Manejar la selección
-        popupMenu.setOnMenuItemClickListener { item ->
-            val selectedSport = resources.getStringArray(R.array.sports_values)[item.itemId]
-            // Realizar acción con el deporte seleccionado
-            true
-        }
-
-        popupMenu.show()
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
-            if (!this::class.java.simpleName.contains("SearchResults")) {
-                startActivity(Intent(this, SearchResultsActivity::class.java))
-                finish()
+        with(binding.bottomNavBar) {
+            findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
+                if (!this@SearchPlayersActivity::class.java.simpleName.contains("SearchResults")) {
+                    startActivity(Intent(this@SearchPlayersActivity, SearchResultsActivity::class.java))
+                    finish()
+                }
+            }
+
+            findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
+                // Already in search players
+            }
+
+            findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
+                if (!this@SearchPlayersActivity::class.java.simpleName.contains("Scouts")) {
+                    startActivity(Intent(this@SearchPlayersActivity, ScoutsActivity::class.java))
+                    finish()
+                }
             }
         }
+    }
 
-        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
-            // Ya estamos en search_players, no hacemos nada
-        }
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
 
-        binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
-            if (!this::class.java.simpleName.contains("Scouts")) {
-                startActivity(Intent(this, ScoutsActivity::class.java))
-                finish()
-            }
-        }
+    private fun hideLoading() {
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showError(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
     }
 }

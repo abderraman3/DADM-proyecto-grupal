@@ -25,4 +25,5 @@
     <string name="sport_football">Soccer</string>
     <string name="sport_NFL">NFL</string>
     <string name="sport_basketball">Basketball</string>
+    <string name="player_image">Player image</string>
 </resources>
