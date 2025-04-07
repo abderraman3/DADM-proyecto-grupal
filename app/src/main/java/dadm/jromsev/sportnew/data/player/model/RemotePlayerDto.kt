@@ -3,7 +3,7 @@ package dadm.jromsev.sportnew.data.player.model
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RemotePlayerDto (
+data class PlayerDto (
     val idPlayer: String,
     val idTeam: String,
     val strPlayer: String,
@@ -17,4 +17,9 @@ data class RemotePlayerDto (
     val strGender: String,
     val strPosition: String,
     val relevance: String
+)
+
+@JsonClass(generateAdapter = true)
+data class RemotePlayerDto(
+    val player: List<PlayerDto>?
 )
