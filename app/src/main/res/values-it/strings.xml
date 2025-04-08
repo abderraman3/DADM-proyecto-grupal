@@ -7,4 +7,21 @@
     <string name="player_to_scouts">Aggiungi giocatore allo scouting</string>
     <string name="delete_scouted_players_list_question">Sei sicuro di eliminare l\\\'elenco dei giocatori tenuti d\'occhio?</string>
     <string name="delete_scouted_players_list_title">Elimina l\\\'elenco dei giocatori scoutati</string>
+    <string name="get_scouts">Vai a Scout</string>
+    <string name="get_results">Ottieni risultati</string>
+    <string name="get_players">Ottieni giocatori</string>
+    <string name="title_search_players">Giocatori</string>
+    <string name="title_search_results">Risultati</string>
+    <string name="settings">Impostazioni</string>
+    <string name="back">Indietro</string>
+    <string name="language">Lingua</string>
+    <string name="select_language">Seleziona la lingua</string>
+    <string name="language_spanish">Spagnolo (Español)</string>
+    <string name="language_english">Inglese (English)</string>
+    <string name="language_italian">Italiano</string>
+    <string name="night_mode_disabled">Modalità notturna disabilitata</string>
+    <string name="night_mode_activated">Modalità notturna attivata</string>
+    <string name="sport_football">Calcio</string>
+    <string name="sport_NFL">NFL</string>
+    <string name="sport_basketball">Pallacanestro</string>
 </resources>

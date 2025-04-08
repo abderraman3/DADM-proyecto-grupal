@@ -7,4 +7,21 @@
     <string name="player_to_scouts">Añadir jugador a ojeados</string>
     <string name="delete_scouted_players_list_question">¿Estás seguro de borrar la lista de jugadores ojeados?</string>
     <string name="delete_scouted_players_list_title">Eliminar la lista de jugadores explorados</string>
+    <string name="get_scouts">Ir a ojeados</string>
+    <string name="get_results">Ir a Jugadores</string>
+    <string name="get_players">Ir a Jugadores</string>
+    <string name="title_search_players">Jugadores</string>
+    <string name="title_search_results">Resultados</string>
+    <string name="settings">Opciones</string>
+    <string name="back">Atrás</string>
+    <string name="language">Idioma</string>
+    <string name="select_language">Seleccionar idioma</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">Inglés (English)</string>
+    <string name="language_italian">Italiano</string>
+    <string name="night_mode_disabled">Modo noche desactivado</string>
+    <string name="night_mode_activated">Modo noche activado</string>
+    <string name="sport_football">Fútbol</string>
+    <string name="sport_NFL">NFL</string>
+    <string name="sport_basketball">Baloncesto</string>
 </resources>

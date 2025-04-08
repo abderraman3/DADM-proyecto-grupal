@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Barra superior -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp">
+
+            <ImageButton
+                android:id="@+id/btn_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/retrun"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="start"
+                android:contentDescription="@string/back"
+                android:minWidth="58dp"
+                android:minHeight="58dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Configuración de idioma -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/language"
+                android:textSize="18dp"/>
+        </LinearLayout>
+
+        <!-- Configuración de modo noche -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/nightModeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="@string/night_mode_disabled"/>
+
+            <Switch
+                android:id="@+id/nightModeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
