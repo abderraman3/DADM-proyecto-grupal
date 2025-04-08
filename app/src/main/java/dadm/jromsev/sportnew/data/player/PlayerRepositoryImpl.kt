@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(
     private val playerDataSource: PlayerDataSource,
-    private val connectivityChecker: ConnectivityChecker, override val it: Any
+    private val connectivityChecker: ConnectivityChecker
 ) : PlayerRepository {
     override suspend fun getNewPlayers(name: String, sport: String): Result<List<Player>> {
         return if (connectivityChecker.isConnectionAvailable()) {
