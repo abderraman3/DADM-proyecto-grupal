@@ -1,0 +1,47 @@
+[33md0ea997[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdeepseek_internet[m[33m, [m[1;31morigin/deepseek_internet[m[33m)[m Merge remote-tracking branch 'origin/master' into deepseek_internet
+[33m7bb3fee[m copia del master
+[33m8e7792d[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m Merge pull request #1 from abderraman3/API-Player
+[33m4803f80[m Resto de ficheros por crear para API player
+[33m285b262[m PRUEBA RAMA
+[33m7a555f0[m capacidad de hacer llamadas http get y recibir json
+[33m3310830[m color en los botones de copa, stickman y ojo
+[33mc10b9d7[m He quitado bottom_nav_bar.xml
+[33m927f727[m He quitado el botón para seleccionar el lenguaje
+[33meabf608[m Uso del arrays.xml para indicar el lenguaje
+[33m54b210c[m creación de arrays.xml
+[33m1ffb465[m buscador
+[33macec56a[m Settings actualizado 3
+[33mad3204a[m Settings actualizado 2
+[33m2459bb6[m Settings actualizado
+[33mcc997ba[m Texto para la ventana de settings
+[33m39af1ef[m Solución a pedales
+[33m790f7f7[m Error
+[33ma204937[m flecha return
+[33m51f98a7[m títulos
+[33ma0d8e22[m Cambiar de ventana
+[33m67bbc80[m Iniciar por search results
+[33me5e45ed[m creación de la barra
+[33m5ee340e[m creación del nav_graph.xml
+[33m93d8cfa[m Creación deepseek
+[33m86215b5[m avabces en el acceso a la info del jugador con la api
+[33m54815a7[m Iconos de la aplicación
+[33m57c7f3a[m app se ejecuta
+[33m09bcdc0[m Merge remote-tracking branch 'origin/master'
+[33m0c3833e[m Temas
+[33m8784443[m ficheros build.gradle funcionando
+[33mdfe6eba[m Merge remote-tracking branch 'origin/master'
+[33m87e1e3b[m ficheros build.gradle
+[33m398aa50[m Merge remote-tracking branch 'origin/master'
+[33m40daee3[m carpeta ui
+[33m3685fdc[m Estructura básica de carpetas
+[33me519695[m Merge remote-tracking branch 'origin/master'
+[33m7faa9f1[m no se
+[33mfc71b9b[m Estructura básica de carpetas
+[33mdab219d[m Cambio el it-IT por it en strings
+[33m9824fb3[m Piola el italiano
+[33me08adc7[m Merge remote-tracking branch 'origin/master'
+[33md68ef22[m Italiano y cambio los colores a inglés
+[33mc9ea484[m Algunos strings
+[33m781d613[m Colores
+[33m2cc46a7[m Colores
+[33m4bde9c1[m Primer commit
