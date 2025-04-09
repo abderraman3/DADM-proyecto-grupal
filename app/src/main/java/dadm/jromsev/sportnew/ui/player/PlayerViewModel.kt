@@ -38,7 +38,7 @@ class PlayerViewModel @Inject constructor(
                     _players.value = playersList
 
                     if (playersList.isEmpty()) {
-                        _errorState.value = Throwable("No se han encontrado jugadores")
+                        _errorState.value = Throwable("No se han encontrado jugadores") // este texto esta hardcoding, habra que cambiarlo por un recurso de tipo string
                     }
                 },
                 onFailure = { error -> _errorState.value = error }

@@ -1,5 +1,5 @@
 package dadm.jromsev.sportnew.di
-
+/*
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -14,6 +14,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
+
+// esta clase hace falta
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,4 +43,4 @@ object NetworkModule {
     fun providePlayerService(retrofit: Retrofit): PlayerRetrofit {
         return retrofit.create(PlayerRetrofit::class.java)
     }
-}
+}*/

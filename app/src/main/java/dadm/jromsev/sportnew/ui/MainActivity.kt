@@ -1,5 +1,6 @@
 package dadm.jromsev.sportnew.ui
 
+/*
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels //
@@ -14,10 +15,12 @@ import dadm.jromsev.sportnew.ui.player.PlayerViewModel //
 import dagger.hilt.android.AndroidEntryPoint //
 import kotlinx.coroutines.launch //
 
-@AndroidEntryPoint //
+//En esta rama esta activity tampoco se usa
+
+//@AndroidEntryPoint //
 class MainActivity : AppCompatActivity() {
 
-    private val playerViewModel: PlayerViewModel by viewModels() //
+    //private val playerViewModel: PlayerViewModel by viewModels() //
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Observamos la lista de jugadores
+     /*   // Observamos la lista de jugadores
         playerViewModel.players.observe(this) { playersList ->
             binding.textViewPlayers.text = if (playersList.isNotEmpty()) { //text view player añadido al textview del layout
                 playersList.joinToString(", ") { it.player }
@@ -57,6 +60,6 @@ class MainActivity : AppCompatActivity() {
             val nombre = "Harry Kane"     // aquí puedes cambiar a lo que quieras
             val deporte = "Soccer"  // o conectar a un Spinner más adelante
             playerViewModel.getNewPlayers(nombre, deporte)
-        }
+        }*/
     }
-}
+}*/
