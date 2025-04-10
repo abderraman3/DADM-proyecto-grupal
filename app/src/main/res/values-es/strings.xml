@@ -24,4 +24,5 @@
     <string name="sport_football">Fútbol</string>
     <string name="sport_NFL">NFL</string>
     <string name="sport_basketball">Baloncesto</string>
+    <string name="no_players_found">No se encontraron jugadores</string>
 </resources>
