@@ -38,38 +38,60 @@
             android:src="@drawable/settings" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Buscador -->
-    <SearchView
-        android:id="@+id/searchView"
+    <!-- Contenedor para SearchView y botón de filtro -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:queryHint="@string/Search"
-        android:iconifiedByDefault="false"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <!-- Buscador -->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:iconifiedByDefault="false"
+            android:queryHint="@string/Search" />
+
+        <!-- Botón de filtro -->
+        <ImageButton
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/Filters"
+            android:src="@drawable/sport_filter" />
+    </LinearLayout>
+
+    <!-- Boton TEMPORAL para pruebas -->
 
     <TextView
         android:id="@+id/textViewPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="search players"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"
+        app:layout_constraintVertical_bias="0.487" />
 
-    <!-- Boton TEMPORAL para pruebas -->
     <Button
         android:id="@+id/buttonSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Buscar jugadores temporal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPlayers"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <!-- Barra de navegación inferior (integrada directamente) -->
     <LinearLayout
