@@ -26,5 +26,8 @@
     <string name="sport_NFL">NFL</string>
     <string name="sport_basketball">Basketball</string>
     <string name="base_url" translatable="false">https://www.thesportsdb.com/api/v1/json/3/</string>
-    <string name="no_players_found">No players found</string>
+    <string name="network_error">Network error. Please check your connection.</string>
+    <string name="invalid_input_error">Please enter a valid player name</string>
+    <string name="unknown_error">An unknown error occurred</string>
+    <string name="no_players_found">No players found matching your search</string>
 </resources>
