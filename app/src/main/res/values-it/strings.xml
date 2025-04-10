@@ -25,4 +25,7 @@
     <string name="sport_NFL">NFL</string>
     <string name="sport_basketball">Pallacanestro</string>
     <string name="no_players_found">Nessun giocatore trovato</string>
+    <string name="network_error">Errore di rete. Controlla la connessione.</string>
+    <string name="invalid_input_error">Inserisci un nome giocatore valido</string>
+    <string name="unknown_error">Si è verificato un errore</string>
 </resources>
