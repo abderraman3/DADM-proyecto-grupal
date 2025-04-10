@@ -2,10 +2,12 @@ package dadm.jromsev.sportnew.ui
 
 import android.content.Intent
 import android.graphics.Color
+import androidx.appcompat.widget.SearchView
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import androidx.activity.viewModels
@@ -27,21 +29,41 @@ class SearchPlayersActivity : AppCompatActivity() {
 
     private lateinit var sportsDisplay: Array<String>
     private lateinit var sportsValues: Array<String>
-    private var selectedSportIndex: Int = 0 // Guardamos el índice seleccionado
+    private var selectedSportIndex: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SearchPlayersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializar arrays de deportes
         sportsDisplay = resources.getStringArray(R.array.sports_display)
         sportsValues = resources.getStringArray(R.array.sports_values)
-        selectedSportIndex = 0 // Valor por defecto
+        selectedSportIndex = 0
 
         // Configurar botón de settings
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        // Configurar SearchView
+        binding.searchView.apply {
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let {
+                        if (it.isNotEmpty()) {
+                            playerViewModel.getNewPlayers(it, sportsValues[selectedSportIndex])
+                        }
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+
+            imeOptions = EditorInfo.IME_ACTION_SEARCH
+            isSubmitButtonEnabled = true
         }
 
         // Configurar botón de filtro
@@ -54,7 +76,7 @@ class SearchPlayersActivity : AppCompatActivity() {
         // Observar lista de jugadores
         playerViewModel.players.observe(this) { playersList ->
             binding.textViewPlayers.text = if (playersList.isNotEmpty()) {
-                playersList.joinToString(", ") { it.player }
+                playersList.joinToString("\n") { it.player }
             } else {
                 getString(R.string.no_players_found)
             }
@@ -65,26 +87,18 @@ class SearchPlayersActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 playerViewModel.errorState.collect { error ->
                     error?.let {
-                        binding.textViewPlayers.text = it.message
+                        binding.textViewPlayers.text = it.message ?: getString(R.string.unknown_error)
                     }
                 }
             }
-        }
-
-        // Buscar jugadores con el deporte seleccionado
-        binding.buttonSearch.setOnClickListener {
-            val nombre = "Harry Kane"
-            playerViewModel.getNewPlayers(nombre, sportsValues[selectedSportIndex])
         }
     }
 
     private fun showSportsFilterMenu(anchor: View) {
         val popupMenu = PopupMenu(this, anchor).apply {
-            // Crear menú con todos los items
             sportsDisplay.forEachIndexed { index, sportName ->
                 val menuItem = menu.add(Menu.NONE, index, Menu.NONE, sportName)
 
-                // Aplicar estilo al item seleccionado
                 if (index == selectedSportIndex) {
                     val color = ContextCompat.getColor(this@SearchPlayersActivity, R.color.teal_200)
                     val span = android.text.SpannableString(sportName)
@@ -98,7 +112,6 @@ class SearchPlayersActivity : AppCompatActivity() {
                 }
             }
 
-            // Establecer listener para selección
             setOnMenuItemClickListener { item: MenuItem ->
                 selectedSportIndex = item.itemId
                 true
@@ -116,7 +129,7 @@ class SearchPlayersActivity : AppCompatActivity() {
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
-            // Ya estamos en la actividad actual
+            // Actividad actual, no hacer nada
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
