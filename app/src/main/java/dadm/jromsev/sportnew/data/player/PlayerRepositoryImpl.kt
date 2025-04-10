@@ -33,7 +33,7 @@ class PlayerRepositoryImpl @Inject constructor(
                         "Active",
                         ignoreCase = true
                     )
-                }.take(3)
+                }//.take(3)
 
                 if (filteredPlayers.isNotEmpty()) {
                     Result.success(filteredPlayers)
