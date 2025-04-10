@@ -1,14 +1,16 @@
 package dadm.jromsev.sportnew.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -25,7 +27,7 @@ class SearchPlayersActivity : AppCompatActivity() {
 
     private lateinit var sportsDisplay: Array<String>
     private lateinit var sportsValues: Array<String>
-    private var selectedSport: String = ""
+    private var selectedSportIndex: Int = 0 // Guardamos el índice seleccionado
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +37,7 @@ class SearchPlayersActivity : AppCompatActivity() {
         // Inicializar arrays de deportes
         sportsDisplay = resources.getStringArray(R.array.sports_display)
         sportsValues = resources.getStringArray(R.array.sports_values)
-        selectedSport = sportsValues.firstOrNull() ?: ""
+        selectedSportIndex = 0 // Valor por defecto
 
         // Configurar botón de settings
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
@@ -72,18 +74,33 @@ class SearchPlayersActivity : AppCompatActivity() {
         // Buscar jugadores con el deporte seleccionado
         binding.buttonSearch.setOnClickListener {
             val nombre = "Harry Kane"
-            playerViewModel.getNewPlayers(nombre, selectedSport)
+            playerViewModel.getNewPlayers(nombre, sportsValues[selectedSportIndex])
         }
     }
 
     private fun showSportsFilterMenu(anchor: View) {
         val popupMenu = PopupMenu(this, anchor).apply {
+            // Crear menú con todos los items
             sportsDisplay.forEachIndexed { index, sportName ->
-                menu.add(0, index, Menu.NONE, sportName)
+                val menuItem = menu.add(Menu.NONE, index, Menu.NONE, sportName)
+
+                // Aplicar estilo al item seleccionado
+                if (index == selectedSportIndex) {
+                    val color = ContextCompat.getColor(this@SearchPlayersActivity, R.color.teal_200)
+                    val span = android.text.SpannableString(sportName)
+                    span.setSpan(
+                        android.text.style.ForegroundColorSpan(color),
+                        0,
+                        sportName.length,
+                        android.text.Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+                    menuItem.title = span
+                }
             }
 
+            // Establecer listener para selección
             setOnMenuItemClickListener { item: MenuItem ->
-                selectedSport = sportsValues.getOrNull(item.itemId) ?: ""
+                selectedSportIndex = item.itemId
                 true
             }
         }
