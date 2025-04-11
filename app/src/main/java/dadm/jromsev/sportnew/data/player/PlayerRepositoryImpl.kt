@@ -48,5 +48,4 @@ class PlayerRepositoryImpl @Inject constructor(
             Result.failure(NoInternetException())
         }
     }
-
 }
