@@ -1,10 +1,12 @@
 package dadm.jromsev.sportnew.ui.player
 
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.data.player.PlayerRepository
 import dadm.jromsev.sportnew.ui.domain.model.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
-    private val repository: PlayerRepository
+    private val repository: PlayerRepository,
+    private val resources: Resources
 ) : ViewModel(){
 
     private val _players = MutableLiveData<List<Player>>()
@@ -34,11 +37,9 @@ class PlayerViewModel @Inject constructor(
             val result = repository.getNewPlayers(name, sport)
             result.fold(
                 onSuccess = { playersList ->
-
                     _players.value = playersList
-
                     if (playersList.isEmpty()) {
-                        _errorState.value = Throwable("No se han encontrado jugadores") // este texto esta hardcoding, habra que cambiarlo por un recurso de tipo string
+                        _errorState.value = Throwable(resources.getString(R.string.no_players_found))
                     }
                 },
                 onFailure = { error -> _errorState.value = error }
