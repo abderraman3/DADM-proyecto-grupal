@@ -1,5 +1,6 @@
 package dadm.jromsev.sportnew.ui
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.widget.SearchView
@@ -30,6 +31,7 @@ class SearchPlayersActivity : AppCompatActivity() {
     private lateinit var sportsDisplay: Array<String>
     private lateinit var sportsValues: Array<String>
     private var selectedSportIndex: Int = 0
+    private val selectedSports = mutableSetOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,26 +47,23 @@ class SearchPlayersActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        // Configurar SearchView
-        binding.searchView.apply {
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let {
-                        if (it.isNotEmpty()) {
-                            playerViewModel.getNewPlayers(it, sportsValues[selectedSportIndex])
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    if (it.isNotEmpty()) {
+                        val sportsToSearch = if (selectedSports.isNotEmpty()) {
+                            selectedSports.toList()
+                        } else {
+                            sportsValues.toList() // Buscar en todos los deportes si no hay selección
                         }
+                        playerViewModel.getNewPlayersMultiple(it, sportsToSearch)
                     }
-                    return true
                 }
+                return true
+            }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return false
-                }
-            })
-
-            imeOptions = EditorInfo.IME_ACTION_SEARCH
-            isSubmitButtonEnabled = true
-        }
+            override fun onQueryTextChange(newText: String?): Boolean = false
+        })
 
         // Configurar botón de filtro
         binding.btnFilter.setOnClickListener { view ->
@@ -94,30 +93,28 @@ class SearchPlayersActivity : AppCompatActivity() {
         }
     }
 
+    // Reemplaza la función showSportsFilterMenu existente
     private fun showSportsFilterMenu(anchor: View) {
-        val popupMenu = PopupMenu(this, anchor).apply {
-            sportsDisplay.forEachIndexed { index, sportName ->
-                val menuItem = menu.add(Menu.NONE, index, Menu.NONE, sportName)
+        val currentSelected = BooleanArray(sportsValues.size) { index ->
+            selectedSports.contains(sportsValues[index])
+        }
 
-                if (index == selectedSportIndex) {
-                    val color = ContextCompat.getColor(this@SearchPlayersActivity, R.color.teal_200)
-                    val span = android.text.SpannableString(sportName)
-                    span.setSpan(
-                        android.text.style.ForegroundColorSpan(color),
-                        0,
-                        sportName.length,
-                        android.text.Spannable.SPAN_INCLUSIVE_INCLUSIVE
-                    )
-                    menuItem.title = span
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.select_sports))
+            .setMultiChoiceItems(sportsDisplay, currentSelected) { _, which, isChecked ->
+                val sport = sportsValues[which]
+                if (isChecked) {
+                    selectedSports.add(sport)
+                } else {
+                    selectedSports.remove(sport)
                 }
             }
-
-            setOnMenuItemClickListener { item: MenuItem ->
-                selectedSportIndex = item.itemId
-                true
+            .setPositiveButton(getString(android.R.string.ok)) { dialog, _ ->
+                // Actualizar cualquier indicador visual de filtros seleccionados si es necesario
+                dialog.dismiss()
             }
-        }
-        popupMenu.show()
+            .setNegativeButton(getString(android.R.string.cancel), null)
+            .show()
     }
 
     private fun setupBottomNavigation() {

@@ -28,4 +28,5 @@
     <string name="network_error">Errore di rete. Controlla la connessione.</string>
     <string name="invalid_input_error">Inserisci un nome giocatore valido</string>
     <string name="unknown_error">Si è verificato un errore</string>
+    <string name="select_sports">Seleziona lo sport</string>
 </resources>

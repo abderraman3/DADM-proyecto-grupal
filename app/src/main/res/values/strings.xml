@@ -30,4 +30,5 @@
     <string name="invalid_input_error">Please enter a valid player name</string>
     <string name="unknown_error">An unknown error occurred</string>
     <string name="no_players_found">No players found matching your search</string>
+    <string name="select_sports">Select sports</string>
 </resources>
