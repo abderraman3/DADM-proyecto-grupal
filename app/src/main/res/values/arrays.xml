@@ -20,7 +20,7 @@
 
     <string-array name="sports_values">
         <item>NFL</item>
-        <item>Basket</item>
+        <item>Basketball</item>
         <item>Soccer</item>
     </string-array>
 </resources>
