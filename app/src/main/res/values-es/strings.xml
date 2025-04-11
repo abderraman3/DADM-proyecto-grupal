@@ -29,4 +29,5 @@
     <string name="invalid_input_error">Ingresa un nombre de jugador válido</string>
     <string name="unknown_error">Ocurrió un error desconocido</string>
     <string name="select_sports">Seleccionar deportes</string>
+    <string name="ice_hockey">Hockey sobre hielo</string>
 </resources>

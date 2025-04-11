@@ -32,6 +32,7 @@ class SearchPlayersActivity : AppCompatActivity() {
     private lateinit var sportsValues: Array<String>
     private var selectedSportIndex: Int = 0
     private val selectedSports = mutableSetOf<String>()
+    private var lastQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +52,8 @@ class SearchPlayersActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     if (it.isNotEmpty()) {
-                        val sportsToSearch = if (selectedSports.isNotEmpty()) {
-                            selectedSports.toList()
-                        } else {
-                            sportsValues.toList() // Buscar en todos los deportes si no hay selección
-                        }
+                        lastQuery = it // Guardar la última búsqueda
+                        val sportsToSearch = if (selectedSports.isNotEmpty()) selectedSports.toList() else sportsValues.toList()
                         playerViewModel.getNewPlayersMultiple(it, sportsToSearch)
                     }
                 }
@@ -93,7 +91,6 @@ class SearchPlayersActivity : AppCompatActivity() {
         }
     }
 
-    // Reemplaza la función showSportsFilterMenu existente
     private fun showSportsFilterMenu(anchor: View) {
         val currentSelected = BooleanArray(sportsValues.size) { index ->
             selectedSports.contains(sportsValues[index])
@@ -110,7 +107,11 @@ class SearchPlayersActivity : AppCompatActivity() {
                 }
             }
             .setPositiveButton(getString(android.R.string.ok)) { dialog, _ ->
-                // Actualizar cualquier indicador visual de filtros seleccionados si es necesario
+                // Relanzar búsqueda si hay una consulta previa
+                lastQuery?.let { query ->
+                    val sportsToSearch = if (selectedSports.isNotEmpty()) selectedSports.toList() else sportsValues.toList()
+                    playerViewModel.getNewPlayersMultiple(query, sportsToSearch)
+                }
                 dialog.dismiss()
             }
             .setNegativeButton(getString(android.R.string.cancel), null)
