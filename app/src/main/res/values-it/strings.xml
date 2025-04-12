@@ -31,7 +31,7 @@
     <string name="select_sports">Seleziona lo sport</string>
     <string name="ice_hockey">Hockey su ghiaccio</string>
     <string name="player_name">Nome del giocatore:</string>
-    <string name="player_name_team">Squadra di giocatori:</string>
+    <string name="player_name_team">Squadra del giocatore:</string>
     <string name="player_sport">Sport:</string>
     <string name="player_nationality">Nazionalità:</string>
     <string name="player_date_born">Data di nascita:</string>
