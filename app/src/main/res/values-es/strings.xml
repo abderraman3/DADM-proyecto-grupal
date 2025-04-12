@@ -30,4 +30,12 @@
     <string name="unknown_error">Ocurrió un error desconocido</string>
     <string name="select_sports">Seleccionar deportes</string>
     <string name="ice_hockey">Hockey sobre hielo</string>
+    <string name="player_name">Nombre del jugador:</string>
+    <string name="player_name_team">"Equipo del jugador: "</string>
+    <string name="player_sport">Deporte:</string>
+    <string name="player_nationality">Nacionalidad:</string>
+    <string name="player_date_born">Fecha de nacimiento:</string>
+    <string name="player_status">Estado:</string>
+    <string name="player_gender">Género:</string>
+    <string name="player_position">Posición:</string>
 </resources>

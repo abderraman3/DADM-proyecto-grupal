@@ -32,4 +32,12 @@
     <string name="no_players_found">No players found matching your search</string>
     <string name="select_sports">Select sports</string>
     <string name="ice_hockey">Ice Hockey</string>
+    <string name="player_name">Player\'s name:</string>
+    <string name="player_name_team">Player\'s team:</string>
+    <string name="player_sport">Sport:</string>
+    <string name="player_nationality">Nationality:</string>
+    <string name="player_date_born">Birthdate:</string>
+    <string name="player_status">Status:</string>
+    <string name="player_gender">Gender:</string>
+    <string name="player_position">Position:</string>
 </resources>
