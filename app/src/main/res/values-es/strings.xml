@@ -38,4 +38,5 @@
     <string name="player_status">Estado:</string>
     <string name="player_gender">Género:</string>
     <string name="player_position">Posición:</string>
+    <string name="return_button_description">Botón que te lleva a la ventana de origen</string>
 </resources>

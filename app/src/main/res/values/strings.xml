@@ -40,4 +40,5 @@
     <string name="player_status">Status:</string>
     <string name="player_gender">Gender:</string>
     <string name="player_position">Position:</string>
+    <string name="return_button_description">Button that takes you to the source window</string>
 </resources>
