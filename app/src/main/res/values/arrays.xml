@@ -16,13 +16,13 @@
         <item>@string/sport_NFL</item>
         <item>@string/sport_basketball</item>
         <item>@string/sport_football</item>
-        <!--<item>@string/ice_hockey</item>-->
+        <item>@string/ice_hockey</item>
     </string-array>
 
     <string-array name="sports_values">
         <item>NFL</item>
         <item>Basketball</item>
         <item>Soccer</item>
-        <!--<item>Ice Hockey</item>-->
+        <item>Ice Hockey</item>
     </string-array>
 </resources>
