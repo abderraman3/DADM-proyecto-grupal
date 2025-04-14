@@ -3,7 +3,11 @@ package dadm.jromsev.sportnew.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchResultsBinding
 
@@ -12,6 +16,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = SearchResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -21,7 +26,34 @@ class SearchResultsActivity : AppCompatActivity() {
         }
 
         setupBottomNavigation()
+        //Padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+
+            view.updatePadding(
+                left = bars.left,
+                top = 0,
+                right = 0,
+                bottom = bars.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+            view.updatePadding(
+                left = 0,
+                top = bars.top,
+                right = 0,
+                bottom = 0
+            )
+            WindowInsetsCompat.CONSUMED
+        }
     }
+
 
     private fun setupBottomNavigation() {
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {

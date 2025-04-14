@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SettingsBinding
 import java.util.Locale
@@ -18,13 +22,27 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = SettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //padding no funciona
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+            view.updatePadding(
+                left = 0,
+                top = bars.top,
+                right = 0,
+                bottom = 0
+            )
+            WindowInsetsCompat.CONSUMED
+        }
         // Configurar botón de retorno
         binding.toolbar.findViewById<ImageButton>(R.id.btn_return).setOnClickListener {
             finish()
         }
+
 
         // Configurar el selector de idioma (ahora en el TextView)
         val languagesDisplay = resources.getStringArray(R.array.languages_display)

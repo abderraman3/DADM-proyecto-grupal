@@ -11,9 +11,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -38,6 +42,7 @@ class SearchPlayersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = SearchPlayersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,6 +50,32 @@ class SearchPlayersActivity : AppCompatActivity() {
         sportsValues = resources.getStringArray(R.array.sports_values)
         selectedSportIndex = 0
 
+        //Padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+
+            view.updatePadding(
+                left = bars.left,
+                top = 0,
+                right = 0,
+                bottom = bars.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+            view.updatePadding(
+                left = 0,
+                top = bars.top,
+                right = 0,
+                bottom = 0
+            )
+            WindowInsetsCompat.CONSUMED
+        }
         // Configurar botón de settings
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
