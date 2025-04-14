@@ -1,10 +1,10 @@
 package dadm.jromsev.sportnew.ui
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -19,35 +19,77 @@ import java.util.Locale
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsBinding
+    private lateinit var preferences: SharedPreferences
+
+    companion object {
+        private const val PREFS_NAME = "AppSettings"
+        private const val KEY_LANGUAGE = "language"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inizializza le preferenze
+        preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+        // Applica la lingua salvata prima di impostare il layout
+        applyLanguage()
+
         enableEdgeToEdge()
         binding = SettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //padding no funciona
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-            val bars = insets.getInsets(
+
+        setupWindowInsets()
+        setupReturnButton()
+        setupLanguageSelector()
+        setupNightModeSwitch()
+    }
+
+    private fun applyLanguage() {
+        // Ottieni la lingua salvata o usa quella di default del sistema
+        val savedLanguage = preferences.getString(KEY_LANGUAGE, null)
+        if (savedLanguage != null) {
+            val locale = Locale(savedLanguage)
+            Locale.setDefault(locale)
+
+            val config = resources.configuration
+            config.setLocale(locale)
+            resources.updateConfiguration(config, resources.displayMetrics)
+        }
+    }
+
+    private fun setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { view, insets ->
+            val systemBars = insets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
-            view.updatePadding(
-                left = 0,
-                top = bars.top,
-                right = 0,
+
+            binding.toolbar.updatePadding(
+                left = systemBars.left,
+                top = systemBars.top,
+                right = systemBars.right,
                 bottom = 0
             )
-            WindowInsetsCompat.CONSUMED
+
+            binding.root.updatePadding(
+                bottom = systemBars.bottom
+            )
+
+            insets
         }
-        // Configurar botón de retorno
+    }
+
+    private fun setupReturnButton() {
         binding.toolbar.findViewById<ImageButton>(R.id.btn_return).setOnClickListener {
             finish()
         }
+    }
 
-
-        // Configurar el selector de idioma (ahora en el TextView)
+    private fun setupLanguageSelector() {
         val languagesDisplay = resources.getStringArray(R.array.languages_display)
         val languagesValues = resources.getStringArray(R.array.languages_values)
 
+        // Ottieni la lingua corrente (o quella salvata se presente)
         val currentLocale = resources.configuration.locales[0]
         val currentLangIndex = languagesValues.indexOf(currentLocale.language).coerceAtLeast(0)
 
@@ -62,8 +104,9 @@ class SettingsActivity : AppCompatActivity() {
                 .setNegativeButton(getString(android.R.string.cancel), null)
                 .show()
         }
+    }
 
-        // Configurar el switch de modo noche
+    private fun setupNightModeSwitch() {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         binding.nightModeSwitch.isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
         updateNightModeText()
@@ -74,8 +117,8 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-            updateNightModeText()
-            recreate()
+            // Riavvia l'activity in modo corretto
+            restartActivity()
         }
     }
 
@@ -83,15 +126,15 @@ class SettingsActivity : AppCompatActivity() {
         val locale = Locale(langCode)
         Locale.setDefault(locale)
 
-        val config = Configuration()
+        val config = resources.configuration
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
 
-        // Actualizar el texto del modo noche según el nuevo idioma
-        updateNightModeText()
+        // Salva la lingua nelle preferenze
+        preferences.edit().putString(KEY_LANGUAGE, langCode).apply()
 
-        // Reiniciar la actividad para aplicar los cambios
-        recreate()
+        // Riavvia l'activity per applicare i cambiamenti
+        restartActivity()
     }
 
     private fun updateNightModeText() {
@@ -101,5 +144,13 @@ class SettingsActivity : AppCompatActivity() {
         } else {
             getString(R.string.night_mode_disabled)
         }
+    }
+
+    private fun restartActivity() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        finish()
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }
