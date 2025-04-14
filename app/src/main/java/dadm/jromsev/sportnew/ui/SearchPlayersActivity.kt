@@ -23,7 +23,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
-import dadm.jromsev.sportnew.databinding.PlayerProfileBinding
 import dadm.jromsev.sportnew.ui.player.PlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,7 +30,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchPlayersActivity : AppCompatActivity() {
     private lateinit var binding: SearchPlayersBinding
-    private var usingOtherLayout = false
     private val playerViewModel: PlayerViewModel by viewModels()
 
     private lateinit var sportsDisplay: Array<String>
@@ -81,13 +79,6 @@ class SearchPlayersActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        binding.textViewPlayers.setOnClickListener {
-            if (!usingOtherLayout) {
-                val nuevoBinding = PlayerProfileBinding.inflate(layoutInflater)
-                setContentView(nuevoBinding.root)
-                usingOtherLayout = true
-            }
-        }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -130,7 +121,13 @@ class SearchPlayersActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.textViewPlayers.setOnClickListener {
+            val intent = Intent(this, PlayerProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
+
 
     private fun showSportsFilterMenu(anchor: View) {
         val currentSelected = BooleanArray(sportsValues.size) { index ->

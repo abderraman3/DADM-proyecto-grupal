@@ -5,6 +5,7 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <data android:scheme="https" />
         </intent>
     </queries>
@@ -19,10 +20,13 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.SportNew"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/Theme.SportNew"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.PlayerProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.SearchResultsActivity"
             android:exported="true">
@@ -40,8 +44,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.SettingsActivity"
-            android:exported="false"
-            android:configChanges="locale|uiMode" />
+            android:configChanges="locale|uiMode"
+            android:exported="false" />
     </application>
 
 </manifest>
