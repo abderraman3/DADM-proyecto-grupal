@@ -39,4 +39,5 @@
     <string name="player_gender">Genere:</string>
     <string name="player_position">Posizione:</string>
     <string name="return_button_description">Pulsante che porta alla finestra sorgente</string>
+    <string name="error_loading_player">Errore durante il caricamento del lettore</string>
 </resources>
