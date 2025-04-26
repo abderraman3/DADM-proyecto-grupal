@@ -46,11 +46,13 @@ class PlayerProfileActivity : AppCompatActivity() {
         binding.playerPosition.text = getString(R.string.player_position) + " " + player.position
 
         // Cargar imagen si está disponible
-        player.image?.let { imageUrl ->
+        if (!player.image.isNullOrEmpty()) {
             Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_foreground) // Imagen por defecto
+                .load(player.image)
+                .error(R.drawable.unknown_player) // Mostrar icono si hay error al cargar
                 .into(binding.imgPlayer)
+        } else {
+            binding.imgPlayer.setImageResource(R.drawable.unknown_player)
         }
     }
 }

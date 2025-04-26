@@ -19,12 +19,17 @@ class PlayerAdapter(
         fun bind(player: Player) {
             binding.tvPlayerName.text = player.player
 
-            Glide.with(binding.imgPlayer.context)
-                .load(player.image)
-                .into(binding.imgPlayer)
+            // Cargar imagen o mostrar icono por defecto si no hay imagen
+            if (!player.image.isNullOrEmpty()) {
+                Glide.with(binding.imgPlayer.context)
+                    .load(player.image)
+                    .error(R.drawable.unknown_player) // Mostrar icono si hay error al cargar
+                    .into(binding.imgPlayer)
+            } else {
+                binding.imgPlayer.setImageResource(R.drawable.unknown_player)
+            }
 
             val context = binding.root.context
-
             binding.tvTeam.text = context.getString(R.string.player_name_team) + " " + player.team
             binding.tvNationality.text = context.getString(R.string.player_nationality) + " " + player.nationality
             binding.tvPosition.text = context.getString(R.string.player_position) + " " + player.position
