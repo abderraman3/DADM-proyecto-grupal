@@ -45,8 +45,9 @@ class SearchPlayersActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         playerAdapter = PlayerAdapter(emptyList()) { player ->
-            val intent = Intent(this, PlayerProfileActivity::class.java)
-            // Passa eventuali dati se necessario
+            val intent = Intent(this, PlayerProfileActivity::class.java).apply {
+                putExtra("player", player)  // Pasa el objeto Player como extra
+            }
             startActivity(intent)
         }
         binding.rvPlayers.adapter = playerAdapter
