@@ -7,26 +7,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Botón de retorno -->
-    <ImageButton
-        android:id="@+id/btn_return"
-        android:layout_width="72dp"
-        android:layout_height="67dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:backgroundTint="#2196F3"
-        android:contentDescription="@string/return_button_description"
-        android:padding="8dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/retrun"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/retrun"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="start"
+            android:contentDescription="@string/back"
+            android:minWidth="58dp"
+            android:minHeight="58dp"
+            android:layout_marginTop="50dp"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- ScrollView para el contenido -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/btn_return"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
