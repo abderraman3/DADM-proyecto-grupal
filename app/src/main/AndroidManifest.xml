@@ -25,10 +25,10 @@
         android:theme="@style/Theme.SportNew"
         tools:targetApi="31">
         <activity
-            android:name=".ui.PlayerProfileActivity"
+            android:name=".ui.player.PlayerProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SearchResultsActivity"
+            android:name=".ui.searchResult.SearchResultsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,10 +37,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SearchPlayersActivity"
+            android:name=".ui.player.SearchPlayersActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ScoutsActivity"
+            android:name=".ui.player.ScoutsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SettingsActivity"

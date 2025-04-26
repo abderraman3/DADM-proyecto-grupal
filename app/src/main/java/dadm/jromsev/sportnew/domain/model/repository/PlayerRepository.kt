@@ -1,6 +1,6 @@
-package dadm.jromsev.sportnew.data.player
+package dadm.jromsev.sportnew.domain.model.repository
 
-import dadm.jromsev.sportnew.ui.domain.model.Player
+import dadm.jromsev.sportnew.domain.model.Player
 
 interface PlayerRepository {
     suspend fun getNewPlayers(name: String, sport: String): Result<List<Player>>

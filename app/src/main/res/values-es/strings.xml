@@ -22,7 +22,7 @@
     <string name="night_mode_disabled">Modo noche desactivado</string>
     <string name="night_mode_activated">Modo noche activado</string>
     <string name="sport_football">Fútbol</string>
-    <string name="sport_NFL">NFL</string>
+    <string name="sport_NFL">Fútbol americano</string>
     <string name="sport_basketball">Baloncesto</string>
     <string name="no_players_found">No se encontraron jugadores</string>
     <string name="network_error">Error de red. Por favor revisa tu conexión.</string>
@@ -40,4 +40,5 @@
     <string name="player_position">Posición:</string>
     <string name="return_button_description">Botón que te lleva a la ventana de origen</string>
     <string name="error_loading_player">Error al cargar la jugador</string>
+    <string name="search_results">Resultados de búsqueda</string>
 </resources>

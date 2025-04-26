@@ -1,14 +1,13 @@
 package dadm.jromsev.sportnew.ui.player
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dadm.jromsev.sportnew.R
-import dadm.jromsev.sportnew.data.player.PlayerRepository
-import dadm.jromsev.sportnew.ui.domain.model.Player
+import dadm.jromsev.sportnew.domain.model.repository.PlayerRepository
+import dadm.jromsev.sportnew.domain.model.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
@@ -47,9 +46,11 @@ class PlayerViewModel @Inject constructor(
                 },
                 onFailure = { error -> _errorState.value = error }
             )
+            _isLoading.value = false
         }
-        _isLoading.value = false
     }
+
+
 
     fun getNewPlayersMultiple(name: String, sports: List<String>) {
         viewModelScope.launch {
@@ -80,6 +81,7 @@ class PlayerViewModel @Inject constructor(
             _isLoading.value = false
         }
     }
+
 
     fun getNewPlayersAll(name: String) {
         viewModelScope.launch {

@@ -1,11 +1,15 @@
 package dadm.jromsev.sportnew.data.player
 
-import androidx.tracing.perfetto.handshake.protocol.Response
 import dadm.jromsev.sportnew.data.player.model.PlayerDto
-import dadm.jromsev.sportnew.ui.domain.model.Player
+import dadm.jromsev.sportnew.data.player.model.RemotePlayerDto
+import dadm.jromsev.sportnew.domain.model.Player
 import dadm.jromsev.sportnew.data.player.model.toDomain
+import dadm.jromsev.sportnew.domain.model.repository.PlayerRepository
 import dadm.jromsev.sportnew.utils.NoInternetException
+import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
+import dadm.jromsev.sportnew.data.player.PlayerRetrofit
 
 class PlayerRepositoryImpl @Inject constructor(
     private val playerDataSource: PlayerDataSource,
@@ -33,7 +37,7 @@ class PlayerRepositoryImpl @Inject constructor(
                         "Active",
                         ignoreCase = true
                     )
-                }//.take(3)
+                }
 
                 if (filteredPlayers.isNotEmpty()) {
                     Result.success(filteredPlayers)
@@ -48,4 +52,5 @@ class PlayerRepositoryImpl @Inject constructor(
             Result.failure(NoInternetException())
         }
     }
-}
+    }
+

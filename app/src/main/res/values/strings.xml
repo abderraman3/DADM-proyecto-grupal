@@ -23,7 +23,7 @@
     <string name="night_mode_disabled">Night mode disabled</string>
     <string name="night_mode_activated">Night mode activated</string>
     <string name="sport_football">Soccer</string>
-    <string name="sport_NFL">NFL</string>
+    <string name="sport_NFL">American Football</string>
     <string name="sport_basketball">Basketball</string>
     <string name="base_url" translatable="false">https://www.thesportsdb.com/api/v1/json/3/</string>
     <string name="network_error">Network error. Please check your connection.</string>
@@ -42,4 +42,6 @@
     <string name="player_position">Position:</string>
     <string name="return_button_description">Button that takes you to the source window</string>
     <string name="error_loading_player">Error loading player</string>
+    <string name="search_results">Search Results</string>
+
 </resources>

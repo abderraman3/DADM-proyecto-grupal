@@ -2,7 +2,7 @@ package dadm.jromsev.sportnew.di
 
 import dadm.jromsev.sportnew.data.player.PlayerDataSource
 import dadm.jromsev.sportnew.data.player.PlayerDataSourceImpl
-import dadm.jromsev.sportnew.data.player.PlayerRepository
+import dadm.jromsev.sportnew.domain.model.repository.PlayerRepository
 import dadm.jromsev.sportnew.data.player.PlayerRepositoryImpl
 import dagger.Binds
 import dagger.Module

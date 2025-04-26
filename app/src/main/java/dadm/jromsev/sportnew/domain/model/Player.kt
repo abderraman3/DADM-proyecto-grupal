@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.ui.domain.model
+package dadm.jromsev.sportnew.domain.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -13,5 +13,6 @@ data class Player(
     val dateBorn: String,
     val status: String?,
     val gender: String,
-    val position: String
+    val position: String,
+    val relevance: String?
 ) : Parcelable

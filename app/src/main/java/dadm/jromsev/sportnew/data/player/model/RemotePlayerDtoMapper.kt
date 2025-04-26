@@ -1,6 +1,6 @@
 package dadm.jromsev.sportnew.data.player.model
 
-import dadm.jromsev.sportnew.ui.domain.model.Player
+import dadm.jromsev.sportnew.domain.model.Player
 import retrofit2.Response
 import java.io.IOException
 
@@ -13,7 +13,8 @@ fun PlayerDto.toDomain() = Player(
     dateBorn= dateBorn,
     status= strStatus,
     gender= strGender,
-    position= strPosition
+    position= strPosition,
+    relevance=relevance
 )
 
 fun Response<PlayerDto>.toDomain() =

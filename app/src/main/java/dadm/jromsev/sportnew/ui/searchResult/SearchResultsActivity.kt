@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.ui
+package dadm.jromsev.sportnew.ui.searchResult
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchResultsBinding
+import dadm.jromsev.sportnew.ui.player.ScoutsActivity
+import dadm.jromsev.sportnew.ui.player.SearchPlayersActivity
+import dadm.jromsev.sportnew.ui.SettingsActivity
 
 class SearchResultsActivity : AppCompatActivity() {
     private lateinit var binding: SearchResultsBinding
@@ -73,5 +76,6 @@ class SearchResultsActivity : AppCompatActivity() {
                 finish()
             }
         }
+
     }
 }

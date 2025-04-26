@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.ui
+package dadm.jromsev.sportnew.ui.player
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dadm.jromsev.sportnew.databinding.PlayerProfileBinding
+
 
 class PlayerProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

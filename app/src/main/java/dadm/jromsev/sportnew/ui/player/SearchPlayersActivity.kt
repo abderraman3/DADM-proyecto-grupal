@@ -1,29 +1,27 @@
-package dadm.jromsev.sportnew.ui
+package dadm.jromsev.sportnew.ui.player
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.widget.SearchView
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
-import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
-import dadm.jromsev.sportnew.ui.player.PlayerViewModel
+import dadm.jromsev.sportnew.ui.SettingsActivity
+import dadm.jromsev.sportnew.ui.adapter.PlayerAdapter
+import dadm.jromsev.sportnew.ui.searchResult.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,11 +36,21 @@ class SearchPlayersActivity : AppCompatActivity() {
     private val selectedSports = mutableSetOf<String>()
     private var lastQuery: String? = null
 
+    private lateinit var playerAdapter: PlayerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = SearchPlayersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        playerAdapter = PlayerAdapter(emptyList()) { player ->
+            val intent = Intent(this, PlayerProfileActivity::class.java)
+            // Passa eventuali dati se necessario
+            startActivity(intent)
+        }
+        binding.rvPlayers.adapter = playerAdapter
+        binding.rvPlayers.layoutManager = LinearLayoutManager(this)
 
         sportsDisplay = resources.getStringArray(R.array.sports_display)
         sportsValues = resources.getStringArray(R.array.sports_values)
@@ -102,13 +110,14 @@ class SearchPlayersActivity : AppCompatActivity() {
 
         setupBottomNavigation()
 
+        val sportsToSearch = if (selectedSports.isNotEmpty()) selectedSports.toList() else sportsValues.toList()
+        playerViewModel.getNewPlayersAll(sportsToSearch.toString())
+
         // Observar lista de jugadores
         playerViewModel.players.observe(this) { playersList ->
-            binding.textViewPlayers.text = if (playersList.isNotEmpty()) {
-                playersList.joinToString("\n") { it.player }
-            } else {
-                getString(R.string.no_players_found)
-            }
+            val sortedPlayers = playersList.sortedByDescending { it.relevance?.toIntOrNull() ?: 0 }
+            playerAdapter.updatePlayers(sortedPlayers)
+
         }
 
         // Observar errores
@@ -116,15 +125,12 @@ class SearchPlayersActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 playerViewModel.errorState.collect { error ->
                     error?.let {
-                        binding.textViewPlayers.text = it.message ?: getString(R.string.unknown_error)
+                        // Usa Snackbar para visualizzare l'errore
+                        Snackbar.make(binding.root, it.message ?: getString(R.string.unknown_error), Snackbar.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
-        }
-
-        binding.textViewPlayers.setOnClickListener {
-            val intent = Intent(this, PlayerProfileActivity::class.java)
-            startActivity(intent)
         }
     }
 
