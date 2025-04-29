@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.ui
+package dadm.jromsev.sportnew.ui.settings
 
 import android.content.Context
 import android.content.Intent

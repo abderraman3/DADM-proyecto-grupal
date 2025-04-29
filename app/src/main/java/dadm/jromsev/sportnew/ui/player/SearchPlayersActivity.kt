@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,11 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
-import dadm.jromsev.sportnew.ui.SettingsActivity
+import dadm.jromsev.sportnew.ui.settings.SettingsActivity
 import dadm.jromsev.sportnew.ui.adapter.PlayerAdapter
-import dadm.jromsev.sportnew.ui.searchResult.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 
 @AndroidEntryPoint
 class SearchPlayersActivity : AppCompatActivity() {
@@ -126,9 +127,12 @@ class SearchPlayersActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 playerViewModel.errorState.collect { error ->
                     error?.let {
-                        // Usa Snackbar para visualizzare l'errore
-                        Snackbar.make(binding.root, it.message ?: getString(R.string.unknown_error), Snackbar.LENGTH_SHORT)
-                            .show()
+                        // Usa Toast para visualizar el error
+                        Toast.makeText(
+                            this@SearchPlayersActivity,
+                            it.message ?: getString(R.string.unknown_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -172,7 +176,6 @@ class SearchPlayersActivity : AppCompatActivity() {
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {
-            // Actividad actual, no hacer nada
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {

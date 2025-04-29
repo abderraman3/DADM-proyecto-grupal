@@ -40,22 +40,24 @@
 
     <!-- Contenedor para SearchView y botón de filtro -->
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
 
-<androidx.appcompat.widget.SearchView            android:id="@+id/searchView"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:queryHint="@string/Search"
-            android:iconifiedByDefault="false"/>
+            android:iconifiedByDefault="false"
+            android:queryHint="@string/Search" />
 
         <!-- Botón de filtro -->
         <ImageButton
@@ -63,19 +65,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:src="@drawable/sport_filter"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/Filters"/>
+            android:contentDescription="@string/Filters"
+            android:src="@drawable/sport_filter" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_results"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+    <!-- RecyclerView per gli eventi -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/events_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:ignore="NotSibling" />
 
     <!-- Barra de navegación inferior (integrada directamente) -->

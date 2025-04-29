@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.data.player
+package dadm.jromsev.sportnew.data.network
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities

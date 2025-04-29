@@ -1,4 +1,4 @@
-package dadm.jromsev.sportnew.data.player
+package dadm.jromsev.sportnew.data.network
 
 import dadm.jromsev.sportnew.data.player.model.RemotePlayerDto
 import retrofit2.Response

@@ -41,4 +41,7 @@
     <string name="return_button_description">Botón que te lleva a la ventana de origen</string>
     <string name="error_loading_player">Error al cargar la jugador</string>
     <string name="search_results">Resultados de búsqueda</string>
+    <string name="league_choice">Elige el deporte/liga:</string>
+    <string name="season_choice">Elige la temporada:"</string>
+    <string name="no_events_found">No se ha encontrado ningún evento, inténtelo con otro.</string>
 </resources>

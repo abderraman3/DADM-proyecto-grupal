@@ -28,7 +28,7 @@
             android:name=".ui.player.PlayerProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.searchResult.SearchResultsActivity"
+            android:name=".ui.player.SearchPlayersActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,13 +37,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.player.SearchPlayersActivity"
+            android:name=".ui.event.SearchResultsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.player.ScoutsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:configChanges="locale|uiMode"
             android:exported="false" />
     </application>

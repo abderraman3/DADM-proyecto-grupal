@@ -43,5 +43,8 @@
     <string name="return_button_description">Button that takes you to the source window</string>
     <string name="error_loading_player">Error loading player</string>
     <string name="search_results">Search Results</string>
+    <string name="no_events_found">No event found, try with another one.</string>
+    <string name="season_choice">Choose the season:</string>
+    <string name="league_choice">Choose the sport/league:</string>
 
 </resources>

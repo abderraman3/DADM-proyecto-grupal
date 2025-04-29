@@ -41,4 +41,7 @@
     <string name="return_button_description">Pulsante che porta alla finestra sorgente</string>
     <string name="error_loading_player">Errore durante il caricamento del lettore</string>
     <string name="search_results">Risultati della ricerca</string>
+    <string name="no_events_found">Nessun evento trovato, prova con un altro</string>
+    <string name="season_choice">Scegli la stagione:</string>
+    <string name="league_choice">Scegli lo sport/lega:</string>
 </resources>

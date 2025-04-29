@@ -10,8 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.ScoutsBinding
-import dadm.jromsev.sportnew.ui.SettingsActivity
-import dadm.jromsev.sportnew.ui.searchResult.SearchResultsActivity
+import dadm.jromsev.sportnew.ui.settings.SettingsActivity
+import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 
 class ScoutsActivity : AppCompatActivity() {
     private lateinit var binding: ScoutsBinding

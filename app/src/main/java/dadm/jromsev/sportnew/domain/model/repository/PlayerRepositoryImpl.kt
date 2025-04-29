@@ -1,15 +1,12 @@
-package dadm.jromsev.sportnew.data.player
+package dadm.jromsev.sportnew.domain.model.repository
 
+import dadm.jromsev.sportnew.data.network.ConnectivityChecker
+import dadm.jromsev.sportnew.data.player.PlayerDataSource
 import dadm.jromsev.sportnew.data.player.model.PlayerDto
-import dadm.jromsev.sportnew.data.player.model.RemotePlayerDto
 import dadm.jromsev.sportnew.domain.model.Player
 import dadm.jromsev.sportnew.data.player.model.toDomain
-import dadm.jromsev.sportnew.domain.model.repository.PlayerRepository
 import dadm.jromsev.sportnew.utils.NoInternetException
-import okhttp3.ResponseBody
-import retrofit2.Response
 import javax.inject.Inject
-import dadm.jromsev.sportnew.data.player.PlayerRetrofit
 
 class PlayerRepositoryImpl @Inject constructor(
     private val playerDataSource: PlayerDataSource,
