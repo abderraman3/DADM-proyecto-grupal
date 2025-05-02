@@ -45,4 +45,5 @@
     <string name="season_choice">Elige la temporada:"</string>
     <string name="no_events_found">No se ha encontrado ningún evento, inténtelo con otro.</string>
     <string name="button_eye">Botón para guardar un jugador en la base de datos de \"Jugadores ojeados\". También sirve para sacar un jugador de dicha base de datos.</string>
+    <string name="player_removed_from_scouts">Jugador eliminado de los ojeados</string>
 </resources>
