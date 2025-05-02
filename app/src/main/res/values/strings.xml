@@ -47,4 +47,5 @@
     <string name="season_choice">Choose the season:</string>
     <string name="league_choice">Choose the sport/league:</string>
     <string name="button_eye">Button to save a player to the \"Scouted Players\" database. It also serves to remove a player from the database.</string>
+    <string name="player_removed_from_scouts">Player removed from scouts</string>
 </resources>
