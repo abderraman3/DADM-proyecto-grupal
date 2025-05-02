@@ -44,4 +44,5 @@
     <string name="no_events_found">Nessun evento trovato, prova con un altro</string>
     <string name="season_choice">Scegli la stagione:</string>
     <string name="league_choice">Scegli lo sport/lega:</string>
+    <string name="button_eye">Pulsante per salvare un giocatore nel database \"Giocatori osservati\". Serve anche per rimuovere un giocatore dal database in questione.</string>
 </resources>
