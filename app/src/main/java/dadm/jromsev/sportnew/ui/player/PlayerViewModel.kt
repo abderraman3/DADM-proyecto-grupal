@@ -117,4 +117,22 @@ class PlayerViewModel @Inject constructor(
             _isLoading.value = false
         }
     }
+
+    suspend fun isInDatabase(playerName: String): Boolean {
+        return repository.getPlayerByName(playerName) != null
+    }
+
+    suspend fun togglePlayer(player: Player): Boolean {
+        return if (repository.getPlayerByName(player.player) != null) {
+            repository.deletePlayer(player)
+            false
+        } else {
+            repository.insertPlayer(player)
+            true
+        }
+    }
+
+    suspend fun getAllPlayers(): List<Player> {
+        return repository.getAllPlayers()
+    }
 }

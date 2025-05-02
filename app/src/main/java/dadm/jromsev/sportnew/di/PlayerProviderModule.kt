@@ -2,6 +2,9 @@ package dadm.jromsev.sportnew.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import androidx.room.Room
+import dadm.jromsev.sportnew.database.AppDatabase
+import dadm.jromsev.sportnew.database.PlayerDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +30,20 @@ class PlayerProviderModule {
             .baseUrl("https://www.thesportsdb.com/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "players_db"
+        ).build()
+    }
+
+    @Provides
+    fun providePlayerDao(database: AppDatabase): PlayerDao {
+        return database.playerDao()
     }
 }

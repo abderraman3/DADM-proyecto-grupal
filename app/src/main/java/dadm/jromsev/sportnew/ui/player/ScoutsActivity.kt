@@ -4,17 +4,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.ScoutsBinding
 import dadm.jromsev.sportnew.ui.settings.SettingsActivity
 import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ScoutsActivity : AppCompatActivity() {
     private lateinit var binding: ScoutsBinding
+
+    private val viewModel: PlayerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +60,12 @@ class ScoutsActivity : AppCompatActivity() {
         }
 
         setupBottomNavigation()
+
+        lifecycleScope.launch {
+            val players = viewModel.getAllPlayers()
+            val names = players.joinToString("\n") { it.player }
+            binding.tvSavedPlayers.text = names
+        }
     }
 
     private fun setupBottomNavigation() {
