@@ -10,8 +10,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.ScoutsBinding
+import dadm.jromsev.sportnew.ui.adapter.PlayerAdapter
 import dadm.jromsev.sportnew.ui.settings.SettingsActivity
 import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,15 +22,33 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ScoutsActivity : AppCompatActivity() {
     private lateinit var binding: ScoutsBinding
-
     private val viewModel: PlayerViewModel by viewModels()
+    private lateinit var playerAdapter: PlayerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ScoutsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //Padding
+
+        // Configurar el RecyclerView
+        playerAdapter = PlayerAdapter(emptyList()) { player ->
+            val intent = Intent(this, PlayerProfileActivity::class.java).apply {
+                putExtra("player", player)
+            }
+            startActivity(intent)
+        }
+
+        binding.rvScoutedPlayers.layoutManager = LinearLayoutManager(this)
+        binding.rvScoutedPlayers.adapter = playerAdapter
+
+        // Observar la lista de jugadores
+        lifecycleScope.launch {
+            val players = viewModel.getAllPlayers()
+            playerAdapter.updatePlayers(players)
+        }
+
+        // Configurar padding para evitar superposición con componentes del sistema
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
@@ -42,6 +62,7 @@ class ScoutsActivity : AppCompatActivity() {
             )
             WindowInsetsCompat.CONSUMED
         }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
@@ -54,22 +75,16 @@ class ScoutsActivity : AppCompatActivity() {
             )
             WindowInsetsCompat.CONSUMED
         }
+
         // Configurar botón de settings
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         setupBottomNavigation()
-
-        lifecycleScope.launch {
-            val players = viewModel.getAllPlayers()
-            val names = players.joinToString("\n") { it.player }
-            binding.tvSavedPlayers.text = names
-        }
     }
 
     private fun setupBottomNavigation() {
-        // Acceder a los botones directamente desde el LinearLayout usando findViewById
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchResults")) {
                 startActivity(Intent(this, SearchResultsActivity::class.java))

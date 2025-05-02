@@ -12,9 +12,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -134,5 +136,11 @@ class PlayerViewModel @Inject constructor(
 
     suspend fun getAllPlayers(): List<Player> {
         return repository.getAllPlayers()
+    }
+
+    fun getAllPlayersFlow(): Flow<List<Player>> = flow {
+        while (true) {
+            emit(repository.getAllPlayers())
+        }
     }
 }
