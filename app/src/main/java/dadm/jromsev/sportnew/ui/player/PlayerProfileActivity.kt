@@ -1,5 +1,6 @@
 package dadm.jromsev.sportnew.ui.player
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -27,7 +28,6 @@ class PlayerProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
-        // Obtener el jugador pasado como extra
         currentPlayer = intent.getParcelableExtra("player") ?: run {
             Toast.makeText(this, getString(R.string.error_loading_player), Toast.LENGTH_SHORT).show()
             finish()
@@ -36,13 +36,11 @@ class PlayerProfileActivity : AppCompatActivity() {
 
         mostrarInformacionJugador(currentPlayer)
 
-        // Estado inicial del botón del ojo
         lifecycleScope.launch {
             val isSaved = viewModel.isInDatabase(currentPlayer.player)
             setEyeIcon(isSaved)
         }
 
-        // Comportamiento al pulsar el botón del ojo
         binding.btnEye.setOnClickListener {
             lifecycleScope.launch {
                 val isNowSaved = viewModel.togglePlayer(currentPlayer)
@@ -51,6 +49,7 @@ class PlayerProfileActivity : AppCompatActivity() {
         }
 
         binding.btnReturn.setOnClickListener {
+            setResult(RESULT_OK) // Indica que ScoutsActivity debe recargarse
             finish()
         }
     }
@@ -65,11 +64,10 @@ class PlayerProfileActivity : AppCompatActivity() {
         binding.playerGender.text = getString(R.string.player_gender) + " " + player.gender
         binding.playerPosition.text = getString(R.string.player_position) + " " + player.position
 
-        // Cargar imagen si está disponible
         if (!player.image.isNullOrEmpty()) {
             Glide.with(this)
                 .load(player.image)
-                .error(R.drawable.unknown_player) // Mostrar icono si hay error al cargar
+                .error(R.drawable.unknown_player)
                 .into(binding.imgPlayer)
         } else {
             binding.imgPlayer.setImageResource(R.drawable.unknown_player)
@@ -80,5 +78,4 @@ class PlayerProfileActivity : AppCompatActivity() {
         val icon = if (isSaved) R.drawable.eye_closed else R.drawable.eye_open
         binding.btnEye.setImageResource(icon)
     }
-
 }

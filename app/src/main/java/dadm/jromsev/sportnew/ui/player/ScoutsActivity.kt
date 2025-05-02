@@ -31,29 +31,25 @@ class ScoutsActivity : AppCompatActivity() {
         binding = ScoutsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configurar el RecyclerView
         playerAdapter = PlayerAdapter(emptyList()) { player ->
             val intent = Intent(this, PlayerProfileActivity::class.java).apply {
                 putExtra("player", player)
             }
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_PLAYER_PROFILE)
         }
 
         binding.rvScoutedPlayers.layoutManager = LinearLayoutManager(this)
         binding.rvScoutedPlayers.adapter = playerAdapter
 
-        // Observar la lista de jugadores
         lifecycleScope.launch {
             val players = viewModel.getAllPlayers()
             playerAdapter.updatePlayers(players)
         }
 
-        // Configurar padding para evitar superposición con componentes del sistema
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
-
             view.updatePadding(
                 left = bars.left,
                 top = 0,
@@ -76,12 +72,21 @@ class ScoutsActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        // Configurar botón de settings
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         setupBottomNavigation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            lifecycleScope.launch {
+                val players = viewModel.getAllPlayers()
+                playerAdapter.updatePlayers(players)
+            }
+        }
     }
 
     private fun setupBottomNavigation() {
@@ -102,5 +107,9 @@ class ScoutsActivity : AppCompatActivity() {
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
             // Ya estamos en scouts, no hacemos nada
         }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_PLAYER_PROFILE = 1
     }
 }
