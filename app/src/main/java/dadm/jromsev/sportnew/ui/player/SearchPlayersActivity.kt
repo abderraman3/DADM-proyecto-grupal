@@ -17,7 +17,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SearchPlayersBinding
 import dadm.jromsev.sportnew.ui.settings.SettingsActivity

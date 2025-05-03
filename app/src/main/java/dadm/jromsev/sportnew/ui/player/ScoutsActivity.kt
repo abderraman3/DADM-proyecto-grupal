@@ -41,6 +41,26 @@ class ScoutsActivity : AppCompatActivity() {
         binding.rvScoutedPlayers.layoutManager = LinearLayoutManager(this)
         binding.rvScoutedPlayers.adapter = playerAdapter
 
+        // Swipe-to-delete functionality
+        val itemTouchHelper = androidx.recyclerview.widget.ItemTouchHelper(object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT or androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: androidx.recyclerview.widget.RecyclerView,
+                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                target: androidx.recyclerview.widget.RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val player = playerAdapter.getPlayerAt(position)
+                lifecycleScope.launch {
+                    viewModel.deletePlayer(player)
+                    val updatedPlayers = viewModel.getAllPlayers()
+                    playerAdapter.updatePlayers(updatedPlayers)
+                }
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(binding.rvScoutedPlayers)
+
         lifecycleScope.launch {
             val players = viewModel.getAllPlayers()
             playerAdapter.updatePlayers(players)

@@ -133,7 +133,19 @@ class PlayerViewModel @Inject constructor(
             true
         }
     }
-
+    fun deletePlayer(player: Player) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                repository.deletePlayer(player)
+                val updatedPlayers = repository.getAllPlayers()
+                _players.value = updatedPlayers
+            } catch (e: Exception) {
+                _errorState.value = e
+            }
+            _isLoading.value = false
+        }
+    }
     suspend fun getAllPlayers(): List<Player> {
         return repository.getAllPlayers()
     }

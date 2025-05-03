@@ -56,4 +56,8 @@ class PlayerAdapter(
         players = newPlayers
         notifyDataSetChanged()
     }
+
+    fun getPlayerAt(position: Int): Player {
+        return players[position]
+    }
 }
