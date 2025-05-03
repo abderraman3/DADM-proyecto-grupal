@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/language"
+                android:paddingHorizontal="16dp"
                 android:textSize="18dp"/>
         </LinearLayout>
 
@@ -71,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="18sp"
+                android:paddingHorizontal="16dp"
                 android:text="@string/night_mode_disabled"/>
 
             <Switch

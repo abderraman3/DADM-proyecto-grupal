@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import dadm.jromsev.sportnew.R
@@ -27,7 +28,6 @@ class PlayerProfileActivity : AppCompatActivity() {
         binding = PlayerProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
-
         currentPlayer = intent.getParcelableExtra("player") ?: run {
             Toast.makeText(this, getString(R.string.error_loading_player), Toast.LENGTH_SHORT).show()
             finish()
@@ -40,7 +40,18 @@ class PlayerProfileActivity : AppCompatActivity() {
             val isSaved = viewModel.isInDatabase(currentPlayer.player)
             setEyeIcon(isSaved)
         }
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+            view.updatePadding(
+                left = 0,
+                top = bars.top,
+                right = 0,
+                bottom = 0
+            )
+            WindowInsetsCompat.CONSUMED
+        }
         binding.btnEye.setOnClickListener {
             lifecycleScope.launch {
                 val isNowSaved = viewModel.togglePlayer(currentPlayer)
@@ -48,7 +59,7 @@ class PlayerProfileActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnReturn.setOnClickListener {
+        binding.btnReturn.setOnClickListener() {
             setResult(RESULT_OK) // Indica que ScoutsActivity debe recargarse
             finish()
         }
