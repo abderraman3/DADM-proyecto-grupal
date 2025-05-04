@@ -29,6 +29,7 @@ import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 class SearchPlayersActivity : AppCompatActivity() {
     private lateinit var binding: SearchPlayersBinding
     private val playerViewModel: PlayerViewModel by viewModels()
+    private var isSearchActive = false
 
     private lateinit var sportsDisplay: Array<String>
     private lateinit var sportsValues: Array<String>
@@ -88,12 +89,12 @@ class SearchPlayersActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     if (it.isNotEmpty()) {
-                        lastQuery = it // Guardar la última búsqueda
+                        isSearchActive = true  // Ricerca attivata
+                        lastQuery = it
                         val sportsToSearch = if (selectedSports.isNotEmpty()) selectedSports.toList() else sportsValues.toList()
                         playerViewModel.getNewPlayersMultiple(it, sportsToSearch)
                     }
@@ -103,6 +104,7 @@ class SearchPlayersActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean = false
         })
+
 
         // Configurar botón de filtro
         binding.btnFilter.setOnClickListener { view ->
@@ -125,13 +127,13 @@ class SearchPlayersActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 playerViewModel.errorState.collect { error ->
-                    error?.let {
-                        // Usa Toast para visualizar el error
+                    if (isSearchActive && error != null) {
                         Toast.makeText(
                             this@SearchPlayersActivity,
-                            it.message ?: getString(R.string.unknown_error),
+                            error.message ?: getString(R.string.unknown_error),
                             Toast.LENGTH_SHORT
                         ).show()
+                        isSearchActive = false
                     }
                 }
             }
@@ -183,5 +185,14 @@ class SearchPlayersActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isSearchActive", isSearchActive)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        isSearchActive = savedInstanceState.getBoolean("isSearchActive", false)
     }
 }

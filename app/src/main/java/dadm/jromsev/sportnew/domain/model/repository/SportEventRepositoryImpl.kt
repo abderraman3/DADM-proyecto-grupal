@@ -43,7 +43,6 @@ class SportEventRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 val remoteDto = response.body()
-
                 val sportEvents = remoteDto?.events?.map { it.toSportEvent() } ?: emptyList()
 
                 Result.success(sportEvents)
@@ -73,6 +72,5 @@ class SportEventRepositoryImpl @Inject constructor(
 
         } else {
             Result.failure(NoInternetException())
-        }
     }
-}
+}}
