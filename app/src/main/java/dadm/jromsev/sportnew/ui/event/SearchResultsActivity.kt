@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
     private var selectedLeagueId: String = "4335" // Default La Liga
     private var selectedSeason: String = "2024-2025" // Default Season
+    private var selectedRoundIndex: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,6 +131,9 @@ class SearchResultsActivity : AppCompatActivity() {
         val leagueSpinner = dialogView.findViewById<Spinner>(R.id.spinnerLeague)
         val seasonSpinner = dialogView.findViewById<Spinner>(R.id.spinnerSeason)
 
+        val roundSpinner = dialogView.findViewById<Spinner>(R.id.spinnerRound)
+        val roundLabel = dialogView.findViewById<TextView>(R.id.labelRound)
+
         // Get the leagues from resources
         val leagues = resources.getStringArray(R.array.leagues)
         val leagueAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, leagues)
@@ -141,8 +146,23 @@ class SearchResultsActivity : AppCompatActivity() {
         seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         seasonSpinner.adapter = seasonAdapter
 
-        leagueSpinner.setSelection(0)
-        seasonSpinner.setSelection(0)
+        // Restore previous league selection
+        val selectedLeagueIndex = leagues.indexOfFirst {
+            when (selectedLeagueId) {
+                "4391" -> it == "NFL"
+                "4387" -> it == "NBA"
+                "4328" -> it == "Premier League"
+                "4332" -> it == "Serie A"
+                "4335" -> it == "La Liga"
+                "4380" -> it == "NHL"
+                else -> false
+            }
+        }.takeIf { it >= 0 } ?: 0
+        leagueSpinner.setSelection(selectedLeagueIndex)
+
+        // Restore previous season selection
+        val selectedSeasonIndex = currentSeasons.indexOf(selectedSeason).takeIf { it >= 0 } ?: 0
+        seasonSpinner.setSelection(selectedSeasonIndex)
 
         leagueSpinner.setOnItemSelectedListener(object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
@@ -161,7 +181,23 @@ class SearchResultsActivity : AppCompatActivity() {
                 val newSeasonAdapter = ArrayAdapter(this@SearchResultsActivity, android.R.layout.simple_spinner_item, currentSeasons)
                 newSeasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 seasonSpinner.adapter = newSeasonAdapter
-                seasonSpinner.setSelection(0) // Default selection
+                val selectedSeasonIndex = currentSeasons.indexOf(selectedSeason).takeIf { it >= 0 } ?: 0
+                seasonSpinner.setSelection(selectedSeasonIndex)
+
+                val supportsRound = selectedLeague in listOf("La Liga", "Premier League", "Serie A")
+                if (supportsRound) {
+                    roundLabel.visibility = android.view.View.VISIBLE
+                    roundSpinner.visibility = android.view.View.VISIBLE
+
+                    val rounds = (1..38).map { "Round $it" }
+                    val roundAdapter = ArrayAdapter(this@SearchResultsActivity, android.R.layout.simple_spinner_item, rounds)
+                    roundAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    roundSpinner.adapter = roundAdapter
+                    roundSpinner.setSelection(selectedRoundIndex)
+                } else {
+                    roundLabel.visibility = android.view.View.GONE
+                    roundSpinner.visibility = android.view.View.GONE
+                }
             }
 
             override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
@@ -181,16 +217,22 @@ class SearchResultsActivity : AppCompatActivity() {
                 else -> "4335" // Default La Liga
             }
             selectedSeason = selectedSeasonValue
-            sportEventViewModel.getEventsBySeason(selectedLeagueId, selectedSeason)
+            val supportsRound = selectedLeague in listOf("La Liga", "Premier League", "Serie A")
+            if (supportsRound) {
+                val roundSelected = roundSpinner.selectedItem as String
+                selectedRoundIndex = roundSpinner.selectedItemPosition
+                val roundNumber = roundSelected.removePrefix("Round ").trim()
+                sportEventViewModel.getEventsByRound(selectedLeagueId, selectedSeason, roundNumber)
+            } else {
+                sportEventViewModel.getEventsBySeason(selectedLeagueId, selectedSeason)
+            }
         }
         builder.setNegativeButton("Cancel", null)
         builder.show()
     }
 
     private fun setupBottomNavigation() {
-        // Set up the bottom navigation bar to handle button clicks
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
-            // Implement action for the trophy button
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_player).setOnClickListener {

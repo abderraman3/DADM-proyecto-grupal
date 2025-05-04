@@ -55,4 +55,24 @@ class SportEventRepositoryImpl @Inject constructor(
             Result.failure(NoInternetException())
         }
     }
+
+    override suspend fun getEventsByRound(leagueId: String, season: String, round: String): Result<List<SportEvent>> {
+        return if (connectivityChecker.isConnectionAvailable()) {
+
+            val response = sportEventDataSource.getEventsByRound(leagueId, season, round)
+
+            if (response.isSuccessful) {
+                val remoteDto = response.body()
+
+                val sportEvents = remoteDto?.events?.map { it.toSportEvent() } ?: emptyList()
+
+                Result.success(sportEvents)
+            } else {
+                Result.failure(Exception("Error fetching events by round"))
+            }
+
+        } else {
+            Result.failure(NoInternetException())
+        }
+    }
 }

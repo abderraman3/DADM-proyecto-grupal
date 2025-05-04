@@ -48,4 +48,5 @@
     <string name="button_eye">Botón para guardar un jugador en la base de datos de \"Jugadores ojeados\". También sirve para sacar un jugador de dicha base de datos.</string>
     <string name="player_removed_from_scouts">Jugador eliminado de los ojeados</string>
     <string name="player_profile">Perfil del jugador</string>
+    <string name="round">Elige la jornada:</string>
 </resources>

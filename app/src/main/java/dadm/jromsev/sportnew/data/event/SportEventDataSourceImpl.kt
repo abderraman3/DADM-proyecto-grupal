@@ -42,4 +42,17 @@ class SportEventDataSourceImpl @Inject constructor(
 
         return response
     }
+    override suspend fun getEventsByRound(leagueId: String, season: String, round: String): Response<RemoteSportEventDto> {
+        Log.d("API_CALL", "Fetching events for leagueId: $leagueId, season: $season, round: $round")
+        val response = apiService.getEventsByRound(leagueId, round, season)
+
+        if (response.isSuccessful) {
+            val body = response.body()?.let { it.toString() } ?: "No events data"
+            Log.d("API_RESPONSE", "Round events response body: $body")
+        } else {
+            Log.d("API_RESPONSE", "Round events error: ${response.code()}")
+        }
+
+        return response
+    }
 }

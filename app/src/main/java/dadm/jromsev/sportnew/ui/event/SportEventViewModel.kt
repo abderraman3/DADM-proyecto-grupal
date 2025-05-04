@@ -142,4 +142,25 @@ class SportEventViewModel @Inject constructor(
             _isLoading.value = false
         }
     }
+    fun getEventsByRound(leagueId: String, season: String, round: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = repository.getEventsByRound(leagueId, season, round)
+            result.fold(
+                onSuccess = { eventsList ->
+                    _events.value = eventsList
+                    if (eventsList.isEmpty()) {
+                        _errorState.value = Throwable(context.getString(R.string.no_events_found))
+                    } else {
+                        _errorState.value = null
+                    }
+                },
+                onFailure = { error ->
+                    _errorState.value = error
+                }
+            )
+            _isLoading.value = false
+        }
+    }
 }
+

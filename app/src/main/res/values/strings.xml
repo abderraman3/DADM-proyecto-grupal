@@ -49,4 +49,5 @@
     <string name="button_eye">Button to save a player to the \"Scouted Players\" database. It also serves to remove a player from the database.</string>
     <string name="player_removed_from_scouts">Player removed from scouts</string>
     <string name="player_profile">Player profile</string>
+    <string name="round">Choose the round:</string>
 </resources>

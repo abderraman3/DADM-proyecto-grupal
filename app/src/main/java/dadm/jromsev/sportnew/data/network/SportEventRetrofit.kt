@@ -17,4 +17,11 @@ interface SportEventRetrofit {
     suspend fun searchEvents(
         @Query("e") eventName: String,
     ): Response<EventSearchResponseDto>
+
+    @GET("api/v1/json/3/eventsround.php")
+    suspend fun getEventsByRound(
+        @Query("id") leagueId: String,
+        @Query("r") round: String,
+        @Query("s") season: String
+    ): Response<RemoteSportEventDto>
 }
