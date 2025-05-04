@@ -50,4 +50,5 @@
     <string name="player_removed_from_scouts">Player removed from scouts</string>
     <string name="player_profile">Player profile</string>
     <string name="round">Choose the round:</string>
+    <string name="event_logo" translatable="false">Event Logo</string>
 </resources>

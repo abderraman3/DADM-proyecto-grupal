@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/teal_200"
         android:elevation="4dp">
 
         <ImageButton
@@ -145,5 +145,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:contentDescription="@string/button_eye"
         android:src="@drawable/eye_open"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

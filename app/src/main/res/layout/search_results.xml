@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/teal_200"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,8 @@
             android:layout_marginStart="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/Filters"
-            android:src="@drawable/sport_filter" />
+            android:src="@drawable/sport_filter"
+            app:tint="?attr/colorOnSurface"/>
     </LinearLayout>
 
     <!-- RecyclerView per gli eventi -->
@@ -86,8 +87,9 @@
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:background="?attr/colorPrimary"
+        android:background="@color/teal_200"
         android:padding="8dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -13,5 +13,7 @@
 
         <!-- Customize your theme here -->
         <item name="android:windowLightStatusBar">false</item>
+
+
     </style>
 </resources>
