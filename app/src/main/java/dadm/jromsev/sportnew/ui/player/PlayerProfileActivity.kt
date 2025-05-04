@@ -47,18 +47,34 @@ class PlayerProfileActivity : AppCompatActivity() {
             val isSaved = viewModel.isInDatabase(currentPlayer.player)
             setEyeIcon(isSaved)
         }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+                WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.systemBars()
             )
-            view.updatePadding(
-                left = 0,
+
+            // Applica padding solo al contenuto (non alla toolbar)
+            binding.scrollViewProfile.updatePadding(
+                left = bars.left,
+                top = 0, // La toolbar gestirà il suo padding
+                right = bars.right,
+                bottom = bars.bottom
+            )
+
+            // Estendi la toolbar dietro la status bar
+            binding.toolbar.updatePadding(
+                left = bars.left,
                 top = bars.top,
-                right = 0,
+                right = bars.right,
                 bottom = 0
             )
+
             WindowInsetsCompat.CONSUMED
         }
+
+
+
         binding.btnEye.setOnClickListener {
             lifecycleScope.launch {
                 val isNowSaved = viewModel.togglePlayer(currentPlayer)

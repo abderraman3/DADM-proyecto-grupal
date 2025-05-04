@@ -24,6 +24,7 @@ import dadm.jromsev.sportnew.ui.settings.SettingsActivity
 import dadm.jromsev.sportnew.ui.player.SearchPlayersActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 // Actividad encargada de mostrar los resultados de búsqueda de eventos deportivos.
 @AndroidEntryPoint
@@ -91,31 +92,31 @@ class SearchResultsActivity : AppCompatActivity() {
             }
         })
 
-        // Aplica relleno para evitar superposición con componentes del sistema como la cámara
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+        //Padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+
+            val left = max(systemBars.left, cutout.left)
+            val right = max(systemBars.right, cutout.right)
+            val bottom = max(systemBars.bottom, cutout.bottom)
+
+            binding.eventsRecyclerView.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
             )
 
-            view.updatePadding(
-                left = bars.left,
-                top = 0,
-                right = 0,
-                bottom = bars.bottom
+            binding.toolbar.updatePadding(
+                top = systemBars.top
             )
-            WindowInsetsCompat.CONSUMED
-        }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            binding.bottomNavBar.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
             )
-            view.updatePadding(
-                left = 0,
-                top = bars.top,
-                right = 0,
-                bottom = 0
-            )
+
             WindowInsetsCompat.CONSUMED
         }
         binding.toolbar.findViewById<ImageButton>(R.id.btn_settings).setOnClickListener {

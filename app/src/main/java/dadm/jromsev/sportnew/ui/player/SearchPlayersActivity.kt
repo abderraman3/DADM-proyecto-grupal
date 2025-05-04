@@ -24,6 +24,7 @@ import dadm.jromsev.sportnew.ui.adapter.PlayerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
+import kotlin.math.max
 
 /**
  * Actividad que permite buscar jugadores por nombre y filtrar por tipo de deporte.
@@ -67,29 +68,30 @@ class SearchPlayersActivity : AppCompatActivity() {
         selectedSportIndex = 0
 
         //Padding
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+
+            val left = max(systemBars.left, cutout.left)
+            val right = max(systemBars.right, cutout.right)
+            val bottom = max(systemBars.bottom, cutout.bottom)
+
+            binding.rvPlayers.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
             )
 
-            view.updatePadding(
-                left = bars.left,
-                top = 0,
-                right = 0,
-                bottom = bars.bottom
+            binding.toolbar.updatePadding(
+                top = systemBars.top
             )
-            WindowInsetsCompat.CONSUMED
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+
+            binding.bottomNavBar.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
             )
-            view.updatePadding(
-                left = 0,
-                top = bars.top,
-                right = 0,
-                bottom = 0
-            )
+
             WindowInsetsCompat.CONSUMED
         }
         // Configurar botón de settings

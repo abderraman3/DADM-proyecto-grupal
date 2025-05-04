@@ -18,11 +18,13 @@ import dadm.jromsev.sportnew.ui.settings.SettingsActivity
 import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 /**
  * Actividad que muestra la lista de jugadores guardados por el usuario.
  * Permite eliminar jugadores mediante deslizamiento y acceder a su perfil.
  */
+
 @AndroidEntryPoint
 class ScoutsActivity : AppCompatActivity() {
     private lateinit var binding: ScoutsBinding
@@ -74,29 +76,31 @@ class ScoutsActivity : AppCompatActivity() {
             playerAdapter.updatePlayers(players)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-            )
-            view.updatePadding(
-                left = bars.left,
-                top = 0,
-                right = 0,
-                bottom = bars.bottom
-            )
-            WindowInsetsCompat.CONSUMED
-        }
+        //Padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            val left = max(systemBars.left, cutout.left)
+            val right = max(systemBars.right, cutout.right)
+            val bottom = max(systemBars.bottom, cutout.bottom)
+
+            binding.rvScoutedPlayers.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
             )
-            view.updatePadding(
-                left = 0,
-                top = bars.top,
-                right = 0,
-                bottom = 0
+
+            binding.toolbar.updatePadding(
+                top = systemBars.top
             )
+
+            binding.bottomNavBar.updatePadding(
+                left = left,
+                right = right,
+                bottom = bottom
+            )
+
             WindowInsetsCompat.CONSUMED
         }
 
