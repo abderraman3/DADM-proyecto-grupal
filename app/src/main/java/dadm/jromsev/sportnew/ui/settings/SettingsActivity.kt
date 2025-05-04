@@ -16,6 +16,7 @@ import androidx.core.view.updatePadding
 import dadm.jromsev.sportnew.R
 import dadm.jromsev.sportnew.databinding.SettingsBinding
 import java.util.Locale
+import kotlin.math.max
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: SettingsBinding
@@ -39,7 +40,37 @@ class SettingsActivity : AppCompatActivity() {
         binding = SettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupWindowInsets()
+        //Padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.systemBars()
+            )
+
+            // Applica padding solo al contenuto (non alla toolbar)
+            binding.linearLayoutSettings1.updatePadding(
+                left = bars.left,
+                top = 0, // La toolbar gestirà il suo padding
+                right = bars.right,
+                bottom = bars.bottom
+            )
+            binding.linearLayoutSettings2.updatePadding(
+                left = bars.left,
+                top = 0, // La toolbar gestirà il suo padding
+                right = bars.right,
+                bottom = bars.bottom
+            )
+
+            // Estendi la toolbar dietro la status bar
+            binding.toolbar.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = 0
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
         setupReturnButton()
         setupLanguageSelector()
         setupNightModeSwitch()
@@ -58,26 +89,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { view, insets ->
-            val systemBars = insets.getInsets(
-                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
-            )
 
-            binding.toolbar.updatePadding(
-                left = systemBars.left,
-                top = systemBars.top,
-                right = systemBars.right,
-                bottom = 0
-            )
 
-            binding.root.updatePadding(
-                bottom = systemBars.bottom
-            )
-
-            insets
-        }
-    }
 
     private fun setupReturnButton() {
         binding.toolbar.findViewById<ImageButton>(R.id.btn_return).setOnClickListener {
