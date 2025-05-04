@@ -19,12 +19,20 @@ import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * Actividad que muestra la lista de jugadores guardados por el usuario.
+ * Permite eliminar jugadores mediante deslizamiento y acceder a su perfil.
+ */
 @AndroidEntryPoint
 class ScoutsActivity : AppCompatActivity() {
     private lateinit var binding: ScoutsBinding
     private val viewModel: PlayerViewModel by viewModels()
     private lateinit var playerAdapter: PlayerAdapter
 
+    /**
+     * Metodo que se ejecuta al iniciar la actividad.
+     * Configura la interfaz, el RecyclerView y la navegación inferior.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,7 +49,7 @@ class ScoutsActivity : AppCompatActivity() {
         binding.rvScoutedPlayers.layoutManager = LinearLayoutManager(this)
         binding.rvScoutedPlayers.adapter = playerAdapter
 
-        // Swipe-to-delete functionality
+        // Funcionalidad de deslizar para eliminar jugadores
         val itemTouchHelper = androidx.recyclerview.widget.ItemTouchHelper(object : androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT or androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: androidx.recyclerview.widget.RecyclerView,
@@ -99,6 +107,9 @@ class ScoutsActivity : AppCompatActivity() {
         setupBottomNavigation()
     }
 
+    /**
+     * Se llama al volver de otra actividad para actualizar la lista si hubo cambios.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -109,6 +120,9 @@ class ScoutsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Configura los botones de navegación inferior para cambiar entre actividades.
+     */
     private fun setupBottomNavigation() {
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchResults")) {
@@ -125,7 +139,7 @@ class ScoutsActivity : AppCompatActivity() {
         }
 
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_eye).setOnClickListener {
-            // Ya estamos en scouts, no hacemos nada
+            // Ya nos encontramos en ScoutsActivity, no se realiza ninguna acción
         }
     }
 

@@ -57,6 +57,7 @@ class PlayerAdapter(
         notifyDataSetChanged()
     }
 
+    //Para borrar jugadores
     fun getPlayerAt(position: Int): Player {
         return players[position]
     }

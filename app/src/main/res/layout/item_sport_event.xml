@@ -14,7 +14,6 @@
         android:padding="8dp"
         android:gravity="center_vertical">
 
-        <!-- Immagine del logo della lega -->
         <ImageView
             android:id="@+id/imgEventLogo"
             android:layout_width="60dp"
@@ -22,7 +21,6 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/event_logo"/>
 
-        <!-- Contenuto testuale -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +28,6 @@
             android:orientation="vertical"
             android:layout_marginStart="12dp">
 
-            <!-- Nome dell'evento (grassetto) -->
             <TextView
                 android:id="@+id/tvEventName"
                 android:layout_width="wrap_content"
@@ -39,7 +36,6 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/black" />
 
-            <!-- Riga 1: Squadre che giocano -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +59,6 @@
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
-            <!-- Riga 2: Risultato della partita -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

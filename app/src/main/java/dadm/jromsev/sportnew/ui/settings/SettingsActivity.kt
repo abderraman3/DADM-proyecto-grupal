@@ -29,10 +29,10 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inizializza le preferenze
+        // Inicializa las preferencias
         preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-        // Applica la lingua salvata prima di impostare il layout
+        // Aplica el idioma guardado antes de establecer el diseño
         applyLanguage()
 
         enableEdgeToEdge()
@@ -46,7 +46,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun applyLanguage() {
-        // Ottieni la lingua salvata o usa quella di default del sistema
+        // Obtiene el idioma guardado o usa el predeterminado del sistema
         val savedLanguage = preferences.getString(KEY_LANGUAGE, null)
         if (savedLanguage != null) {
             val locale = Locale(savedLanguage)
@@ -89,7 +89,7 @@ class SettingsActivity : AppCompatActivity() {
         val languagesDisplay = resources.getStringArray(R.array.languages_display)
         val languagesValues = resources.getStringArray(R.array.languages_values)
 
-        // Ottieni la lingua corrente (o quella salvata se presente)
+        // Obtiene el idioma actual (o el guardado si está disponible)
         val currentLocale = resources.configuration.locales[0]
         val currentLangIndex = languagesValues.indexOf(currentLocale.language).coerceAtLeast(0)
 
@@ -117,7 +117,7 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-            // Riavvia l'activity in modo corretto
+            // Reinicia la actividad correctamente
             restartActivity()
         }
     }
@@ -130,10 +130,10 @@ class SettingsActivity : AppCompatActivity() {
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
 
-        // Salva la lingua nelle preferenze
+        // Guarda el idioma en las preferencias
         preferences.edit().putString(KEY_LANGUAGE, langCode).apply()
 
-        // Riavvia l'activity per applicare i cambiamenti
+        // Reinicia la actividad para aplicar los cambios
         restartActivity()
     }
 

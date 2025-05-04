@@ -19,6 +19,8 @@ data class PlayerDto (
     val relevance: String
 )
 
+// DTO que representa la respuesta remota de la API que contiene una lista de jugadores.
+// Utiliza la clase PlayerDto para mapear los datos de cada jugador individualmente.
 @JsonClass(generateAdapter = true)
 data class RemotePlayerDto(
     val player: List<PlayerDto>?

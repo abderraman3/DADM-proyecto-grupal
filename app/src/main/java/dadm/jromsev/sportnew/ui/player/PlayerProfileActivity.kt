@@ -1,6 +1,5 @@
 package dadm.jromsev.sportnew.ui.player
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,11 +17,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+/**
+ * Actividad que muestra la información detallada de un jugador seleccionado.
+ * Permite guardar o eliminar al jugador de favoritos y regresar a la pantalla anterior.
+ */
 class PlayerProfileActivity : AppCompatActivity() {
     private lateinit var binding: PlayerProfileBinding
     private val viewModel: PlayerViewModel by viewModels()
     private lateinit var currentPlayer: Player
 
+    /**
+     * Metodo principal que se ejecuta al crear la actividad.
+     * Carga la vista, obtiene el jugador desde el intent y configura los botones.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = PlayerProfileBinding.inflate(layoutInflater)
@@ -34,7 +41,7 @@ class PlayerProfileActivity : AppCompatActivity() {
             return
         }
 
-        mostrarInformacionJugador(currentPlayer)
+        showPlayerInformations(currentPlayer)
 
         lifecycleScope.launch {
             val isSaved = viewModel.isInDatabase(currentPlayer.player)
@@ -60,12 +67,16 @@ class PlayerProfileActivity : AppCompatActivity() {
         }
 
         binding.btnReturn.setOnClickListener() {
-            setResult(RESULT_OK) // Indica que ScoutsActivity debe recargarse
+            setResult(RESULT_OK) // Señala que se debe recargar la actividad anterior (ScoutsActivity)
             finish()
         }
     }
 
-    private fun mostrarInformacionJugador(player: Player) {
+    /**
+     * Muestra los detalles del jugador en los elementos de la interfaz.
+     * Si hay una imagen disponible, la carga con Glide; si no, usa una imagen por defecto.
+     */
+    private fun showPlayerInformations(player: Player) {
         binding.playerName.text = getString(R.string.player_name) + " " + player.player
         binding.playerTeam.text = getString(R.string.player_name_team) + " " + player.team
         binding.playerSport.text = getString(R.string.player_sport) + " " + player.sport
@@ -85,6 +96,9 @@ class PlayerProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Cambia el icono del botón de guardar según si el jugador está en favoritos o no.
+     */
     private fun setEyeIcon(isSaved: Boolean) {
         val icon = if (isSaved) R.drawable.eye_closed else R.drawable.eye_open
         binding.btnEye.setImageResource(icon)

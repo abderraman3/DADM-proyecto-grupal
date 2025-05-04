@@ -9,6 +9,8 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 
+// Implementación de la fuente de datos para obtener jugadores desde la API utilizando Retrofit.
+// La clase maneja la llamada a la API y maneja las excepciones que puedan ocurrir.
 class PlayerDataSourceImpl @Inject constructor(
     private val retrofit: Retrofit
 ) : PlayerDataSource {
@@ -16,6 +18,7 @@ class PlayerDataSourceImpl @Inject constructor(
     private val retrofitPlayerService: PlayerRetrofit =
         retrofit.create(PlayerRetrofit::class.java)
 
+    // Recupera una lista de jugadores desde la API a través del servicio PlayerRetrofit. Si ocurre un error, devuelve un error 400 con el mensaje de la excepción.
     override suspend fun getPlayers(name: String): Response<RemotePlayerDto> {
         return try {
             retrofitPlayerService.getPlayers(name)

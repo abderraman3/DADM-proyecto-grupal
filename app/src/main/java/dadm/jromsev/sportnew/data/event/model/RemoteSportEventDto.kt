@@ -21,12 +21,15 @@ data class SportEventDto(
 )
 
 
+// DTO para manejar la respuesta de la API cuando la lista de eventos está bajo la clave "events".
 @JsonClass(generateAdapter = true)
 data class RemoteSportEventDto(
     @Json(name="events")
     val events: List<SportEventDto>?
 )
 
+// DTO para manejar la respuesta de la API cuando los eventos vienen bajo la clave "event".
+// Algunas llamadas a la API usan "event" en lugar de "events", por eso se definen dos clases distintas.
 @JsonClass(generateAdapter = true)
 data class EventSearchResponseDto(
     @Json(name = "event")

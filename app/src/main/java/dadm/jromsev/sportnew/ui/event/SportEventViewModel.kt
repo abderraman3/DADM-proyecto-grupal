@@ -26,6 +26,7 @@ class SportEventViewModel @Inject constructor(
 
     private val _events = MutableLiveData<List<SportEvent>>()
     val events: LiveData<List<SportEvent>> get() = _events
+    //Mapa para temporada de cada una liga
     private val sportSeasonMap = mapOf(
         "Serie A" to R.array.seasons_serie_a,
         "La Liga" to R.array.seasons_la_liga,

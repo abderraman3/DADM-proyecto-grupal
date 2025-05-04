@@ -3,6 +3,7 @@ package dadm.jromsev.sportnew.domain.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+//Data class para los jugadores
 @Parcelize
 data class Player(
     val player: String,

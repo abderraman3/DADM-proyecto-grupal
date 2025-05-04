@@ -25,6 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import dadm.jromsev.sportnew.ui.event.SearchResultsActivity
 
+/**
+ * Actividad que permite buscar jugadores por nombre y filtrar por tipo de deporte.
+ * También muestra los resultados en una lista y permite acceder al perfil del jugador.
+ */
 @AndroidEntryPoint
 class SearchPlayersActivity : AppCompatActivity() {
     private lateinit var binding: SearchPlayersBinding
@@ -39,6 +43,10 @@ class SearchPlayersActivity : AppCompatActivity() {
 
     private lateinit var playerAdapter: PlayerAdapter
 
+    /**
+     * Metodo principal que inicializa la actividad.
+     * Configura la búsqueda, la interfaz, los filtros y observa los cambios en los datos.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -141,6 +149,10 @@ class SearchPlayersActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Muestra un diálogo para que el usuario seleccione los deportes por los cuales desea filtrar la búsqueda.
+     * Al confirmar, relanza la búsqueda si había una consulta previa.
+     */
     private fun showSportsFilterMenu(anchor: View) {
         val currentSelected = BooleanArray(sportsValues.size) { index ->
             selectedSports.contains(sportsValues[index])
@@ -168,6 +180,9 @@ class SearchPlayersActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Configura los botones de navegación inferior para cambiar entre actividades.
+     */
     private fun setupBottomNavigation() {
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
             if (!this::class.java.simpleName.contains("SearchResults")) {
@@ -186,11 +201,17 @@ class SearchPlayersActivity : AppCompatActivity() {
             }
         }
     }
+    /**
+     * Guarda el estado de la búsqueda activa para restaurarlo después de una recreación de la actividad.
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("isSearchActive", isSearchActive)
     }
 
+    /**
+     * Restaura el estado de la búsqueda activa al recrear la actividad.
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         isSearchActive = savedInstanceState.getBoolean("isSearchActive", false)

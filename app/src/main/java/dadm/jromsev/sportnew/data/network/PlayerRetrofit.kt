@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+//Llamada API para obtener jugadores
 interface PlayerRetrofit {
     @GET("api/v1/json/3/searchplayers.php")
     suspend fun getPlayers(

@@ -25,6 +25,7 @@ import dadm.jromsev.sportnew.ui.player.SearchPlayersActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// Actividad encargada de mostrar los resultados de búsqueda de eventos deportivos.
 @AndroidEntryPoint
 class SearchResultsActivity : AppCompatActivity() {
     private lateinit var binding: SearchResultsBinding
@@ -35,22 +36,22 @@ class SearchResultsActivity : AppCompatActivity() {
     private var selectedSeason: String = "2024-2025" // Default Season
     private var selectedRoundIndex: Int = 0
 
+    // Metodo principal donde se inicializan los componentes de la interfaz y se configuran los observadores.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge() // Enable edge-to-edge behavior
         binding = SearchResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize RecyclerView with an empty list initially
+        // Inicializa el RecyclerView con una lista vacía inicialmente
         val recyclerView = binding.eventsRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         eventAdapter = SportEventAdapter(emptyList()) { event ->
-            Toast.makeText(this, "Clicked on: ${event.eventName}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.adapter = eventAdapter
 
-        // Observe the ViewModel for events
+        // Observa el ViewModel para obtener los eventos
         sportEventViewModel.events.observe(this) { events ->
             eventAdapter.updateEvents(events)
         }
@@ -63,18 +64,18 @@ class SearchResultsActivity : AppCompatActivity() {
             }
         }
 
-        // Fetch events with the default league and season
+        // Obtiene eventos usando la liga y temporada por defecto
         sportEventViewModel.getEventsBySeason(selectedLeagueId, selectedSeason)
 
-        // Set up the filter button to show the league and season dialog
+        // Configura el botón de filtro para mostrar el diálogo de liga y temporada
         binding.btnFilter.setOnClickListener {
             showLeagueAndSeasonFilter()
         }
 
-        // Set up the bottom navigation
+        // Configura la barra de navegación inferior
         setupBottomNavigation()
 
-        // Configure the SearchView to handle query submissions
+        // Configura el SearchView para manejar las búsquedas
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
@@ -90,7 +91,7 @@ class SearchResultsActivity : AppCompatActivity() {
             }
         })
 
-        // Apply padding to avoid overlap with system components like the camera
+        // Aplica relleno para evitar superposición con componentes del sistema como la cámara
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavBar) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
@@ -123,6 +124,7 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
 
+    // Muestra un diálogo para seleccionar la liga y la temporada, y actualiza los eventos según la selección.
     private fun showLeagueAndSeasonFilter() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setTitle("Select League and Season")
@@ -134,19 +136,17 @@ class SearchResultsActivity : AppCompatActivity() {
         val roundSpinner = dialogView.findViewById<Spinner>(R.id.spinnerRound)
         val roundLabel = dialogView.findViewById<TextView>(R.id.labelRound)
 
-        // Get the leagues from resources
         val leagues = resources.getStringArray(R.array.leagues)
         val leagueAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, leagues)
         leagueAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         leagueSpinner.adapter = leagueAdapter
 
-        // Set the default league and season (Premier League 2024-2025)
         var currentSeasons = resources.getStringArray(R.array.seasons_premier_league)
         val seasonAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, currentSeasons)
         seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         seasonSpinner.adapter = seasonAdapter
 
-        // Restore previous league selection
+
         val selectedLeagueIndex = leagues.indexOfFirst {
             when (selectedLeagueId) {
                 "4391" -> it == "NFL"
@@ -160,7 +160,6 @@ class SearchResultsActivity : AppCompatActivity() {
         }.takeIf { it >= 0 } ?: 0
         leagueSpinner.setSelection(selectedLeagueIndex)
 
-        // Restore previous season selection
         val selectedSeasonIndex = currentSeasons.indexOf(selectedSeason).takeIf { it >= 0 } ?: 0
         seasonSpinner.setSelection(selectedSeasonIndex)
 
@@ -231,6 +230,7 @@ class SearchResultsActivity : AppCompatActivity() {
         builder.show()
     }
 
+    // Configura los botones de navegación inferior para cambiar entre las actividades principales de la app.
     private fun setupBottomNavigation() {
         binding.bottomNavBar.findViewById<ImageButton>(R.id.btn_trophy).setOnClickListener {
         }

@@ -14,18 +14,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+// Módulo de Dagger que proporciona las dependencias necesarias para obtener los datos de eventos deportivos y verificar la conectividad.
 @Module
 @InstallIn(SingletonComponent::class)
 object SportEventProviderModule {
 
-    // Fornisce SportEventDataSource usando Retrofit
+    // Proporciona la fuente de datos de eventos deportivos utilizando Retrofit para realizar solicitudes a la API.
     @Provides
     @Singleton
     fun provideSportEventDataSource(retrofit: Retrofit): SportEventDataSource {
         return SportEventDataSourceImpl(retrofit)
     }
 
-    // Fornisce ConnectivityChecker
+    // Proporciona el verificador de conectividad, que utiliza el servicio ConnectivityManager para comprobar la conexión a internet.
     @Provides
     @Singleton
     fun provideConnectivityChecker(connectivityManager: ConnectivityManager): ConnectivityChecker {

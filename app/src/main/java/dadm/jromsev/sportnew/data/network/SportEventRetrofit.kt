@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+//Llamadas API para gestionar eventos
 interface SportEventRetrofit {
     @GET("api/v1/json/3/eventsseason.php")
     suspend fun getEventsBySeason(
